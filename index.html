@@ -35,7 +35,7 @@
         async function cargarProductos() {
             try {
                 // Llamamos a tu servidor que creamos en el paso anterior
-                const respuesta = await fetch('http://localhost:3000/api/productos');
+                const respuesta = await fetch('https://onrender.com');
                 const productos = await respuesta.json();
                 
                 const vitrina = document.getElementById('vitrina');
