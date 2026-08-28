@@ -5,7 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mi Tienda de Hogar</title>
     <style>
-        /* Estilos rápidos para que se vea hermoso y ordenado */
         body { font-family: 'Segoe UI', sans-serif; margin: 0; background-color: #f9f9f9; color: #333; }
         header { text-align: center; background-color: #2c3e50; color: white; padding: 20px; }
         .contenedor { max-width: 1200px; margin: 30px auto; padding: 0 20px; }
@@ -24,34 +23,25 @@
     </header>
 
     <div class="contenedor">
-        <!-- Aquí es donde la magia de JavaScript dibujará tus productos de Supabase -->
         <div id="vitrina" class="grid-productos">
             <p>Cargando tus hermosos productos...</p>
         </div>
     </div>
 
     <script>
-        // Este pequeño código JavaScript va a tu servidor en Render a traer los datos reales
         async function cargarProductos() {
             try {
-                // LLAMADA CORREGIDA CON TU ENLACE REAL Y COMPLETO
                 const respuesta = await fetch('https://onrender.com');
                 const productos = await respuesta.json();
                 
                 const vitrina = document.getElementById('vitrina');
-                vitrina.innerHTML = ''; // Limpiamos el texto de "Cargando..."
+                vitrina.innerHTML = '';
 
-                // Recorremos cada producto que trajimos de Supabase
                 productos.forEach(prod => {
-                    // Creamos el enlace inteligente de WhatsApp
-                    // ⚠️ NOTA: Cambia las XXXXXXXX por tu número real de celular de Bolivia abajo
                     const mensajeWa = `Hola! Me interesa comprar el producto: ${prod.nombre}`;
                     const linkWhatsapp = `https://wa.me{encodeURIComponent(mensajeWa)}`;
-
-                    // Usamos una imagen de muestra de internet si no tiene foto en la base de datos
                     const fotoUrl = prod.imagen_url || 'https://unsplash.com';
 
-                    // Dibujamos la tarjeta del producto en la pantalla
                     vitrina.innerHTML += `
                         <div class="tarjeta">
                             <img src="${fotoUrl}" alt="${prod.nombre}">
@@ -67,8 +57,6 @@
                 document.getElementById('vitrina').innerHTML = '<p>Hubo un problema al cargar los productos.</p>';
             }
         }
-
-        // Ejecutamos la función apenas se abre la página
         cargarProductos();
     </script>
 </body>
