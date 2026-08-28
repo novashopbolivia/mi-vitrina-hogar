@@ -31,10 +31,10 @@
     </div>
 
     <script>
-        // Este pequeño código JavaScript va a tu servidor local a traer los datos reales
+        // Este pequeño código JavaScript va a tu servidor en Render a traer los datos reales
         async function cargarProductos() {
             try {
-                // Llamamos a tu servidor que creamos en el paso anterior
+                // Llamamos a tu servidor en la nube con la ruta correcta
                 const respuesta = await fetch('https://onrender.com');
                 const productos = await respuesta.json();
                 
@@ -43,8 +43,8 @@
 
                 // Recorremos cada producto que trajimos de Supabase
                 productos.forEach(prod => {
-                    // Creamos el enlace inteligente de WhatsApp con tu número
-                    // NOTA: Aquí pondremos tu número de celular real en el siguiente paso
+                    // Creamos el enlace inteligente de WhatsApp
+                    // ⚠️ NOTA: Cambia las XXXXXXXX por tu número real de celular de Bolivia abajo
                     const mensajeWa = `Hola! Me interesa comprar el producto: ${prod.nombre}`;
                     const linkWhatsapp = `https://wa.me{encodeURIComponent(mensajeWa)}`;
 
