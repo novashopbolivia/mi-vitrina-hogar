@@ -498,7 +498,7 @@
             max-width: 860px;
             width: 100%;
             display: grid;
-            grid-template-columns: 1.1fr 1fr;
+            grid-template-columns: 1.15fr 1fr;
             overflow: hidden;
             position: relative;
             max-height: 90vh;
@@ -521,16 +521,16 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            z-index: 20;
+            z-index: 30;
             transition: 0.2s;
         }
         .modal-close-btn:hover { background: #e5ded8; }
 
-        /* GALERÍA / CARRUSEL DENTRO DEL MODAL (ESTILO MARKETPLACE) */
+        /* GALERÍA / CARRUSEL DENTRO DEL MODAL */
         .modal-gallery-box {
             position: relative;
-            background: #faf8f6;
-            min-height: 400px;
+            background: #000;
+            min-height: 380px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -539,33 +539,42 @@
         .modal-media-viewer {
             width: 100%;
             height: 100%;
+            min-height: 380px;
             display: flex;
             align-items: center;
             justify-content: center;
+            background: #000;
         }
-        .modal-media-viewer img, .modal-media-viewer video {
+        .modal-media-viewer img {
             width: 100%;
             height: 100%;
             max-height: 480px;
             object-fit: contain;
-            background: #000;
+            background: #faf8f6;
         }
+        .modal-media-viewer iframe, .modal-media-viewer video {
+            width: 100%;
+            height: 100%;
+            min-height: 380px;
+            border: none;
+        }
+
         .modal-gal-arrow {
             position: absolute;
             top: 50%;
             transform: translateY(-50%);
-            background: rgba(255,255,255,0.85);
+            background: rgba(255,255,255,0.9);
             color: var(--primary);
             border: none;
-            width: 38px; height: 38px;
+            width: 40px; height: 40px;
             border-radius: 50%;
-            font-size: 1rem;
+            font-size: 1.1rem;
             cursor: pointer;
             display: flex;
             align-items: center;
             justify-content: center;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.15);
-            z-index: 10;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+            z-index: 25;
             transition: 0.2s;
         }
         .modal-gal-arrow:hover { background: white; transform: translateY(-50%) scale(1.1); }
@@ -577,13 +586,14 @@
             bottom: 12px;
             left: 50%;
             transform: translateX(-50%);
-            background: rgba(0,0,0,0.7);
+            background: rgba(0,0,0,0.75);
             color: white;
             font-size: 0.75rem;
             font-weight: 700;
-            padding: 3px 10px;
+            padding: 4px 12px;
             border-radius: 20px;
             letter-spacing: 0.5px;
+            z-index: 20;
         }
 
         .modal-details {
@@ -618,7 +628,7 @@
             font-size: 0.88rem;
             line-height: 1.55;
             color: var(--text);
-            white-space: pre-line; /* 👉 Respeta saltos de línea escritos en Supabase */
+            white-space: pre-line;
         }
 
         /* DRAWER DEL CARRITO */
@@ -1062,7 +1072,7 @@
             <!-- GALERÍA MULTIMEDIA (FOTOS Y VIDEOS) -->
             <div class="modal-gallery-box">
                 <div class="modal-media-viewer" id="modalMediaViewer">
-                    <!-- Imagen o Video se inyecta con JS -->
+                    <!-- Contenido multimedia dinámico -->
                 </div>
                 <button class="modal-gal-arrow gal-prev" id="btnGalPrev" onclick="cambiarSlideModal(-1)"><i class="fa-solid fa-chevron-left"></i></button>
                 <button class="modal-gal-arrow gal-next" id="btnGalNext" onclick="cambiarSlideModal(1)"><i class="fa-solid fa-chevron-right"></i></button>
@@ -1649,28 +1659,39 @@
             }
         }
 
-        // 8. MODAL VISTA RÁPIDA AVANZADO (FOTOS, VIDEOS Y DESCRIPCIÓN)
+        // 8. MODAL VISTA RÁPIDA AVANZADO (FOTOS, VIDEOS INTELIGENTES Y DESCRIPCIÓN)
         function abrirModal(id) {
             const prod = listaProductos.find(p => p.id === id);
             if (!prod) return;
 
             const { esOferta, precioFinal, precioTachado } = calcularPreciosProducto(prod);
 
-            // Preparar items de galería (fotos y videos)
+            // 🎯 CONSTRUCCIÓN EXACTA DE LA GALERÍA:
+            // 1. Siempre coloca primero la foto principal (imagen_url)
             galeriaModalItems = [];
-            if (prod.galeria && prod.galeria.trim() !== '') {
-                // Separa por comas
-                galeriaModalItems = prod.galeria.split(',').map(item => item.trim()).filter(Boolean);
+            if (prod.imagen_url && prod.imagen_url.trim() !== '') {
+                galeriaModalItems.push(prod.imagen_url.trim());
             }
-            // Si la galería está vacía o no tiene elementos, añade la imagen principal
+
+            // 2. Luego agrega todos los elementos extra de la columna galeria
+            if (prod.galeria && prod.galeria.trim() !== '') {
+                const extras = prod.galeria.split(',').map(item => item.trim()).filter(Boolean);
+                extras.forEach(url => {
+                    if (!galeriaModalItems.includes(url)) {
+                        galeriaModalItems.push(url);
+                    }
+                });
+            }
+
+            // Si por alguna razón estaba vacía
             if (galeriaModalItems.length === 0) {
-                galeriaModalItems.push(prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500');
+                galeriaModalItems.push('https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500');
             }
 
             indiceGaleriaActual = 0;
             renderizarSlideModal();
 
-            // Textos y etiquetas
+            // Textos y badges
             document.getElementById('modalTitle').textContent = prod.nombre;
             document.getElementById('modalBrandBadge').textContent = prod.marca ? `Marca: ${prod.marca}` : 'Original';
             document.getElementById('modalCatBadge').textContent = esOferta ? 'Mejor oferta' : (prod.categoria || 'Tienda');
@@ -1705,13 +1726,14 @@
             document.getElementById('quickViewModal').classList.add('open');
         }
 
-        // Lógica de cambio de diapositiva en la galería del modal
+        // Navegación con flechas del modal
         function cambiarSlideModal(direccion) {
             if (galeriaModalItems.length <= 1) return;
             indiceGaleriaActual = (indiceGaleriaActual + direccion + galeriaModalItems.length) % galeriaModalItems.length;
             renderizarSlideModal();
         }
 
+        // 🎬 RENDERIZADOR INTELIGENTE (IMÁGENES, STREAMABLE, GOOGLE DRIVE, YOUTUBE, MP4)
         function renderizarSlideModal() {
             const viewer = document.getElementById('modalMediaViewer');
             const counter = document.getElementById('modalMediaCounter');
@@ -1721,7 +1743,6 @@
             const total = galeriaModalItems.length;
             counter.textContent = `${indiceGaleriaActual + 1} / ${total}`;
 
-            // Ocultar flechas si solo hay 1 foto
             if (total <= 1) {
                 btnPrev.style.display = 'none';
                 btnNext.style.display = 'none';
@@ -1732,28 +1753,71 @@
                 counter.style.display = 'block';
             }
 
-            const url = galeriaModalItems[indiceGaleriaActual];
-            const esVideo = url.match(/\.(mp4|webm|ogg|mov)($|\?)/i);
+            const rawUrl = galeriaModalItems[indiceGaleriaActual];
+            const url = rawUrl.trim();
 
-            if (esVideo) {
-                // Video con autoplay silencioso
+            // 1. STREAMABLE (Ej: https://streamable.com/465uqg)
+            if (url.includes('streamable.com/')) {
+                const videoId = url.split('/').filter(Boolean).pop();
                 viewer.innerHTML = `
-                    <video src="${url}" autoplay muted loop playsinline controls style="width:100%; height:100%; object-fit:contain; background:#000; border-radius:10px;">
-                        Tu navegador no soporta reproducción de video.
+                    <iframe src="https://streamable.com/e/${videoId}?autoplay=1&muted=1" 
+                            width="100%" height="100%" frameborder="0" allowfullscreen allow="autoplay">
+                    </iframe>
+                `;
+                return;
+            }
+
+            // 2. GOOGLE DRIVE (Ej: https://drive.google.com/file/d/1A2B3C.../view)
+            if (url.includes('drive.google.com/file/d/')) {
+                const driveIdMatch = url.match(/\/d\/([a-zA-Z0-9_-]+)/);
+                if (driveIdMatch && driveIdMatch[1]) {
+                    const driveId = driveIdMatch[1];
+                    viewer.innerHTML = `
+                        <iframe src="https://drive.google.com/file/d/${driveId}/preview" 
+                                width="100%" height="100%" frameborder="0" allow="autoplay" allowfullscreen>
+                        </iframe>
+                    `;
+                    return;
+                }
+            }
+
+            // 3. YOUTUBE O SHORTS
+            if (url.includes('youtube.com/') || url.includes('youtu.be/')) {
+                let ytId = '';
+                if (url.includes('youtu.be/')) ytId = url.split('/').filter(Boolean).pop();
+                else if (url.includes('/shorts/')) ytId = url.split('/shorts/')[1].split('?')[0];
+                else if (url.includes('watch?v=')) ytId = url.split('watch?v=')[1].split('&')[0];
+
+                if (ytId) {
+                    viewer.innerHTML = `
+                        <iframe src="https://www.youtube.com/embed/${ytId}?autoplay=1&mute=1" 
+                                width="100%" height="100%" frameborder="0" allow="autoplay; encrypted-media" allowfullscreen>
+                        </iframe>
+                    `;
+                    return;
+                }
+            }
+
+            // 4. ARCHIVO DE VIDEO DIRECTO (.mp4, .webm, .ogg, .mov)
+            if (url.match(/\.(mp4|webm|ogg|mov)($|\?)/i)) {
+                viewer.innerHTML = `
+                    <video src="${url}" autoplay muted loop playsinline controls style="width:100%; height:100%; object-fit:contain; background:#000;">
+                        Tu navegador no soporta reproducción directa de video.
                     </video>
                 `;
-            } else {
-                // Imagen
-                viewer.innerHTML = `
-                    <img src="${url}" alt="Foto producto" loading="lazy" style="width:100%; height:100%; object-fit:contain;">
-                `;
+                return;
             }
+
+            // 5. IMAGEN (Postimages, Imgur, etc.)
+            viewer.innerHTML = `
+                <img src="${url}" alt="Foto producto" loading="lazy" 
+                     onerror="this.onerror=null; this.src='https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';">
+            `;
         }
 
         function cerrarModal() {
-            // Pausar video al cerrar modal si existía
-            const video = document.querySelector('#modalMediaViewer video');
-            if (video) video.pause();
+            const viewer = document.getElementById('modalMediaViewer');
+            viewer.innerHTML = ''; // Detener reproducción de videos al cerrar
             document.getElementById('quickViewModal').classList.remove('open');
         }
 
