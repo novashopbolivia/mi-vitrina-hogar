@@ -48,15 +48,19 @@
         }
         .topbar a { color: white; text-decoration: none; font-weight: 600; margin-left: 15px; }
 
+        /* ================= CONTENEDOR FIJO STICKY (AMBAS BARRAS SIEMPRE ARRIBA) ================= */
+        .sticky-header-container {
+            position: sticky;
+            top: 0;
+            z-index: 500;
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+        }
+
         /* MAIN HEADER */
         .main-header {
             background: var(--sunset-gradient);
             color: white;
-            padding: 16px 20px;
-            position: sticky;
-            top: 0;
-            z-index: 200;
-            box-shadow: 0 4px 20px rgba(224, 56, 19, 0.18);
+            padding: 14px 20px;
         }
         .header-inner {
             max-width: 1320px;
@@ -92,7 +96,7 @@
         }
         .search-container input {
             width: 100%;
-            padding: 12px 20px 12px 48px;
+            padding: 11px 20px 11px 48px;
             background: white;
             border: 2px solid transparent;
             border-radius: 50px;
@@ -112,7 +116,7 @@
             font-size: 1.1rem;
         }
 
-        /* BOTON CARRITO */
+        /* BOTON CARRITO HEADER */
         .header-actions { display: flex; align-items: center; gap: 12px; }
         .btn-header-cart {
             background: white;
@@ -139,12 +143,10 @@
             font-weight: 800;
         }
 
-        /* BARRA DE CATEGORÍAS */
+        /* BARRA DE CATEGORÍAS (FIJA JUNTO AL HEADER) */
         .nav-categories-bar {
             background: white;
             border-bottom: 1px solid var(--border);
-            position: relative;
-            z-index: 150;
             overflow: visible !important;
         }
         .nav-categories-inner {
@@ -160,7 +162,7 @@
         .nav-link-btn {
             background: none;
             border: none;
-            padding: 15px 20px;
+            padding: 13px 20px;
             font-size: 0.95rem;
             font-weight: 600;
             color: var(--text);
@@ -337,7 +339,7 @@
             padding: 24px;
             height: fit-content;
             position: sticky;
-            top: 90px;
+            top: 140px; /* Ajustado para el header doble fijo */
         }
         .sidebar-head {
             display: flex;
@@ -540,6 +542,7 @@
             cursor: pointer;
         }
 
+        /* PRECIOS EXACTOS (PRECIO ANTERIOR TACHADO Y PRECIO OFERTA REAL) */
         .card-price-box {
             margin-top: auto;
             margin-bottom: 15px;
@@ -552,7 +555,7 @@
             font-weight: 700;
             color: #dc2626;
             text-decoration: line-through;
-            opacity: 0.85;
+            opacity: 0.8;
         }
         .card-price-box .price-current {
             font-size: 1.45rem;
@@ -705,18 +708,16 @@
             font-weight: 800;
         }
 
-        /* CHECKOUT FOOTER DEL CARRITO */
+        /* CHECKOUT FOOTER */
         .cart-checkout-footer {
             padding: 18px 22px;
             border-top: 1px solid var(--border);
             background: #faf8f6;
             max-height: 65vh;
             overflow-y: auto;
-            display: none; /* Se muestra solo si hay items */
+            display: none;
         }
-        .cart-checkout-footer.show {
-            display: block;
-        }
+        .cart-checkout-footer.show { display: block; }
 
         .cart-total-display {
             display: flex;
@@ -728,9 +729,7 @@
         }
 
         /* MÉTODO DE ENTREGA */
-        .delivery-section {
-            margin-bottom: 14px;
-        }
+        .delivery-section { margin-bottom: 14px; }
         .delivery-title {
             font-size: 0.9rem;
             font-weight: 800;
@@ -799,7 +798,7 @@
         .interior-fields.show { display: flex; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
-        /* BOTÓN WHATSAPP (CON ESTADO HABILITADO / DESHABILITADO) */
+        /* BOTÓN WHATSAPP */
         .btn-send-whatsapp {
             background: #cbd5e1;
             color: #64748b;
@@ -815,7 +814,6 @@
             justify-content: center;
             gap: 10px;
             transition: all 0.25s;
-            box-shadow: none;
         }
         .btn-send-whatsapp.enabled {
             background: var(--whatsapp);
@@ -896,35 +894,40 @@
         </div>
     </div>
 
-    <!-- MAIN HEADER -->
-    <header class="main-header">
-        <div class="header-inner">
-            <div class="logo-box" onclick="irAInicioOfertas()">
-                <h1>NovaShop</h1>
-                <span>Bolivia</span>
-            </div>
+    <!-- ================= CONTENEDOR FIJO STICKY (BUSCADOR + CATEGORÍAS FIJAS ARRIBA) ================= -->
+    <div class="sticky-header-container">
+        
+        <!-- MAIN HEADER -->
+        <header class="main-header">
+            <div class="header-inner">
+                <div class="logo-box" onclick="irAInicioOfertas()">
+                    <h1>NovaShop</h1>
+                    <span>Bolivia</span>
+                </div>
 
-            <!-- BUSCADOR -->
-            <div class="search-container">
-                <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Buscar productos, ofertas, marcas..." oninput="ejecutarFiltros()">
-            </div>
+                <!-- BUSCADOR -->
+                <div class="search-container">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="searchInput" placeholder="Buscar productos, ofertas, marcas..." oninput="ejecutarFiltros()">
+                </div>
 
-            <!-- CARRITO -->
-            <div class="header-actions">
-                <button class="btn-header-cart" onclick="toggleCart()">
-                    <i class="fa-solid fa-cart-shopping"></i>
-                    <span>Carrito</span>
-                    <span id="cartCountBadge" class="cart-badge">0</span>
-                </button>
+                <!-- CARRITO -->
+                <div class="header-actions">
+                    <button class="btn-header-cart" onclick="toggleCart()">
+                        <i class="fa-solid fa-cart-shopping"></i>
+                        <span>Carrito</span>
+                        <span id="cartCountBadge" class="cart-badge">0</span>
+                    </button>
+                </div>
             </div>
-        </div>
-    </header>
+        </header>
 
-    <!-- MENÚ DE CATEGORÍAS -->
-    <nav class="nav-categories-bar">
-        <ul class="nav-categories-inner" id="navCategoryDropdowns"></ul>
-    </nav>
+        <!-- MENÚ DE CATEGORÍAS -->
+        <nav class="nav-categories-bar">
+            <ul class="nav-categories-inner" id="navCategoryDropdowns"></ul>
+        </nav>
+
+    </div>
 
     <!-- CARRUSEL PROMOCIONAL -->
     <section class="carousel-section" id="promoCarouselSection">
@@ -1019,8 +1022,8 @@
                 </div>
                 <h2 id="modalTitle" style="font-size: 1.4rem; color: var(--primary); margin-bottom: 8px;"></h2>
                 <p id="modalSubcat" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;"></p>
-                <div style="font-size: 2rem; font-weight: 800; color: #dc2626; margin-bottom: 30px;">
-                    <span id="modalPrice"></span> <span style="font-size: 1.1rem;">Bs.</span>
+                <div id="modalPriceContainer" style="margin-bottom: 30px;">
+                    <!-- Se llena con precio y tachado si aplica -->
                 </div>
                 <div style="margin-top: auto;">
                     <button class="btn-card-cart-full" id="modalBtnAddToCart" style="padding: 15px; border-radius: var(--radius-sm);">
@@ -1041,14 +1044,14 @@
 
         <div class="cart-items-list" id="cartItemsList"></div>
 
-        <!-- FOOTER DE CHECKOUT (SOLO SE MUESTRA SI HAY PRODUCTOS) -->
+        <!-- FOOTER DE CHECKOUT -->
         <div class="cart-checkout-footer" id="cartCheckoutFooter">
             <div class="cart-total-display">
                 <span>Total a Pagar:</span>
                 <span id="cartTotalSum" style="color: var(--price);">0.00 Bs.</span>
             </div>
 
-            <!-- SELECCIÓN DE MÉTODO DE ENTREGA (OBLIGATORIO) -->
+            <!-- SELECCIÓN DE MÉTODO DE ENTREGA -->
             <div class="delivery-section">
                 <div class="delivery-title"><i class="fa-solid fa-truck-fast"></i> Método de Entrega (Obligatorio) *:</div>
                 <div class="delivery-options-grid">
@@ -1079,7 +1082,7 @@
                 <input type="tel" id="custPhone" placeholder="Teléfono / Celular de contacto *" oninput="validarFormularioCarrito()">
             </div>
 
-            <!-- DATO NOMBRE (ÚNICO CAMPO GENERAL) -->
+            <!-- DATO NOMBRE -->
             <div class="checkout-form">
                 <input type="text" id="orderCustName" placeholder="Tu Nombre completo *" required oninput="validarFormularioCarrito()">
             </div>
@@ -1144,6 +1147,25 @@
         let intervaloCarrusel = null;
         let carrito = JSON.parse(localStorage.getItem('novashop_sunset_cart')) || [];
 
+        // 🎯 FUNCIÓN PARA CALCULAR PRECIOS REALES (DESCUENTO Y TACHADO)
+        function calcularPreciosProducto(prod) {
+            const esOferta = (prod.en_oferta === true || prod.en_oferta === 'true' || prod.precio_oferta != null);
+            
+            // Precio a cobrar: si tiene precio_oferta usa ese, sino usa precio normal
+            let precioFinal = parseFloat(prod.precio || 0);
+            let precioTachado = null;
+
+            if (esOferta && prod.precio_oferta != null && parseFloat(prod.precio_oferta) > 0) {
+                precioFinal = parseFloat(prod.precio_oferta);
+                // El precio anterior a tachar es el precio_anterior o el precio regular
+                precioTachado = prod.precio_anterior ? parseFloat(prod.precio_anterior) : parseFloat(prod.precio);
+            } else if (prod.precio_anterior && parseFloat(prod.precio_anterior) > precioFinal) {
+                precioTachado = parseFloat(prod.precio_anterior);
+            }
+
+            return { esOferta, precioFinal, precioTachado };
+        }
+
         // 1. INICIALIZAR
         async function inicializar() {
             try {
@@ -1151,7 +1173,11 @@
                 if (!res.ok) throw new Error('Error al conectar con backend');
                 listaProductos = await res.json();
 
-                const precios = listaProductos.map(p => parseFloat(p.precio) || 0);
+                const precios = listaProductos.map(p => {
+                    const { precioFinal } = calcularPreciosProducto(p);
+                    return precioFinal;
+                });
+
                 if (precios.length > 0) {
                     const maxP = Math.ceil(Math.max(...precios));
                     document.getElementById('priceRangeInput').max = maxP;
@@ -1289,7 +1315,7 @@
             }
         }
 
-        // 4. SIDEBAR DE FILTROS ACORDEÓN
+        // 4. SIDEBAR DE FILTROS
         function construirFiltrosSidebar() {
             const catCount = {};
             const subcatCount = {};
@@ -1414,9 +1440,11 @@
             }
 
             const filtrados = listaProductos.filter(p => {
+                const { esOferta, precioFinal } = calcularPreciosProducto(p);
+
                 let matchCat = false;
                 if (categoriaSeleccionada === 'ofertas') {
-                    matchCat = (p.en_oferta === true || p.en_oferta === 'true' || p.precio_anterior != null || p.precio_oferta != null);
+                    matchCat = esOferta;
                 } else if (categoriaSeleccionada === 'todas') {
                     matchCat = true;
                 } else {
@@ -1425,7 +1453,7 @@
 
                 const matchSub = (subcategoriaSeleccionada === 'todas') || (p.subcategoria === subcategoriaSeleccionada);
                 const matchBrand = (marcaSeleccionada === 'todas') || (p.marca && p.marca.toLowerCase() === marcaSeleccionada.toLowerCase());
-                const matchPrice = (parseFloat(p.precio) || 0) <= precioMaximo;
+                const matchPrice = precioFinal <= precioMaximo;
 
                 const matchSearch = p.nombre.toLowerCase().includes(query) ||
                                     (p.categoria && p.categoria.toLowerCase().includes(query)) ||
@@ -1488,19 +1516,18 @@
 
             grid.innerHTML = productos.map(prod => {
                 const foto = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
-                const esOferta = (prod.en_oferta === true || prod.en_oferta === 'true' || prod.precio_anterior != null);
+                const { esOferta, precioFinal, precioTachado } = calcularPreciosProducto(prod);
                 const tagTexto = esOferta ? 'Mejor oferta' : (prod.subcategoria || prod.categoria || 'Novedad');
 
+                // Renderizado de precios limpio y exacto
                 let priceHtml = '';
-                if (esOferta && prod.precio_anterior) {
+                if (precioTachado && precioTachado > precioFinal) {
                     priceHtml = `
-                        <span class="price-old">${prod.precio_anterior} Bs.</span>
-                        <span class="price-current">${prod.precio} Bs.</span>
+                        <span class="price-old">${precioTachado} Bs.</span>
+                        <span class="price-current">${precioFinal} Bs.</span>
                     `;
-                } else if (esOferta) {
-                    priceHtml = `<span class="price-current">${prod.precio} Bs.</span>`;
                 } else {
-                    priceHtml = `<span class="price-normal">${prod.precio} Bs.</span>`;
+                    priceHtml = `<span class="price-normal">${precioFinal} Bs.</span>`;
                 }
 
                 return `
@@ -1547,12 +1574,25 @@
             const prod = listaProductos.find(p => p.id === id);
             if (!prod) return;
 
+            const { esOferta, precioFinal, precioTachado } = calcularPreciosProducto(prod);
+
             document.getElementById('modalImg').src = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
             document.getElementById('modalTitle').textContent = prod.nombre;
             document.getElementById('modalBrandBadge').textContent = prod.marca ? `Marca: ${prod.marca}` : 'Original';
-            document.getElementById('modalCatBadge').textContent = (prod.en_oferta === true || prod.en_oferta === 'true') ? 'Mejor oferta' : (prod.categoria || 'Tienda');
+            document.getElementById('modalCatBadge').textContent = esOferta ? 'Mejor oferta' : (prod.categoria || 'Tienda');
             document.getElementById('modalSubcat').textContent = prod.subcategoria ? `Sección: ${prod.subcategoria}` : '';
-            document.getElementById('modalPrice').textContent = prod.precio;
+
+            const priceContainer = document.getElementById('modalPriceContainer');
+            if (precioTachado && precioTachado > precioFinal) {
+                priceContainer.innerHTML = `
+                    <div style="display: flex; align-items: baseline; gap: 10px;">
+                        <span style="font-size: 1.3rem; font-weight: 700; color: #dc2626; text-decoration: line-through; opacity: 0.8;">${precioTachado} Bs.</span>
+                        <span style="font-size: 2.2rem; font-weight: 800; color: #dc2626;">${precioFinal} Bs.</span>
+                    </div>
+                `;
+            } else {
+                priceContainer.innerHTML = `<span style="font-size: 2.2rem; font-weight: 800; color: var(--primary);">${precioFinal} Bs.</span>`;
+            }
 
             document.getElementById('modalBtnAddToCart').onclick = () => {
                 agregarAlCarrito(prod.id);
@@ -1598,26 +1638,22 @@
         function validarFormularioCarrito() {
             const btnWa = document.getElementById('btnConfirmarWhatsApp');
             
-            // 1. Debe haber items en carrito
             if (carrito.length === 0) {
                 deshabilitarBoton(btnWa);
                 return;
             }
 
-            // 2. Debe haber seleccionado método de entrega
             if (!metodoEntregaSeleccionado) {
                 deshabilitarBoton(btnWa);
                 return;
             }
 
-            // 3. Debe tener Nombre
             const nombre = document.getElementById('orderCustName').value.trim();
             if (!nombre) {
                 deshabilitarBoton(btnWa);
                 return;
             }
 
-            // 4. Si es Interior, validar los 3 campos extras
             if (metodoEntregaSeleccionado === 'Envío al Interior') {
                 const ciudad = document.getElementById('custCity').value.trim();
                 const ci = document.getElementById('custCI').value.trim();
@@ -1629,7 +1665,6 @@
                 }
             }
 
-            // ✅ Si todo está completo, habilitar botón
             btnWa.disabled = false;
             btnWa.classList.add('enabled');
         }
@@ -1643,6 +1678,8 @@
             const prod = listaProductos.find(p => p.id === id);
             if (!prod) return;
 
+            const { precioFinal } = calcularPreciosProducto(prod);
+
             const item = carrito.find(i => i.id === id);
             if (item) {
                 item.cantidad += 1;
@@ -1651,7 +1688,7 @@
                     id: prod.id,
                     nombre: prod.nombre,
                     marca: prod.marca || '',
-                    precio: parseFloat(prod.precio),
+                    precio: precioFinal, // 👉 Cobra el precio con descuento real
                     imagen_url: prod.imagen_url,
                     cantidad: 1
                 });
@@ -1700,12 +1737,12 @@
                         <h4>Tu carrito está vacío</h4>
                         <p style="font-size: 0.85rem; margin-top: 5px;">¡Añade productos para iniciar tu compra!</p>
                     </div>`;
-                footer.classList.remove('show'); // 👉 Oculta los métodos de entrega y checkout
+                footer.classList.remove('show');
                 metodoEntregaSeleccionado = '';
                 return;
             }
 
-            footer.classList.add('show'); // 👉 Muestra los métodos de entrega y checkout
+            footer.classList.add('show');
 
             let sumaTotal = 0;
             container.innerHTML = carrito.map(item => {
