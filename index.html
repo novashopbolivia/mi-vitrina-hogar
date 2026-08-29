@@ -22,13 +22,14 @@
             --text: #0f172a;
             --text-muted: #64748b;
             --price: #16a34a;
-            --tag-bg: #f1f5f9;
+            --brand-tag: #f0fdf4;
+            --brand-text: #15803d;
         }
 
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Plus Jakarta Sans', sans-serif; }
         body { background-color: var(--bg); color: var(--text); padding-bottom: 40px; }
 
-        /* TOP ANNOUNCEMENT BAR */
+        /* TOPBAR */
         .topbar {
             background-color: #0b132b;
             color: #94a3b8;
@@ -45,7 +46,7 @@
         .topbar span b { color: #f8fafc; }
         .topbar-links a { color: #cbd5e1; text-decoration: none; margin-left: 15px; }
 
-        /* NAVBAR PRINCIPAL */
+        /* NAVBAR */
         nav {
             background: var(--surface);
             border-bottom: 1px solid var(--border);
@@ -84,7 +85,7 @@
         .brand-text h1 { font-size: 1.35rem; font-weight: 800; line-height: 1.1; letter-spacing: -0.5px; }
         .brand-text span { font-size: 0.72rem; color: var(--text-muted); text-transform: uppercase; font-weight: 700; letter-spacing: 0.8px; }
 
-        /* BUSCADOR ESTILO SUPERMERCADO WIX */
+        /* SEARCH BAR */
         .search-bar-center {
             flex: 1;
             max-width: 580px;
@@ -113,7 +114,7 @@
             color: var(--text-muted);
         }
 
-        /* ACCIONES DE USUARIO */
+        /* ACTIONS */
         .nav-actions { display: flex; align-items: center; gap: 15px; }
         .btn-cart-nav {
             background: #eff6ff;
@@ -139,7 +140,7 @@
             font-weight: 800;
         }
 
-        /* BARRA HORIZONTAL DE CATEGORÍAS */
+        /* CATEGORIES STRIP */
         .categories-strip {
             background: white;
             border-bottom: 1px solid var(--border);
@@ -175,7 +176,7 @@
             border-color: var(--primary);
         }
 
-        /* HERO PROMO BANNER */
+        /* HERO BANNER */
         .hero-banner {
             max-width: 1280px;
             margin: 25px auto 0;
@@ -184,102 +185,67 @@
         .hero-card {
             background: linear-gradient(135deg, #1e3a8a 0%, #3b82f6 100%);
             border-radius: 20px;
-            padding: 40px 45px;
+            padding: 35px 40px;
             color: white;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
             position: relative;
             overflow: hidden;
             box-shadow: 0 10px 30px rgba(37,99,235,0.18);
         }
-        .hero-text h2 { font-size: 2.2rem; font-weight: 800; margin-bottom: 10px; line-height: 1.15; }
-        .hero-text p { font-size: 1.05rem; opacity: 0.9; margin-bottom: 20px; max-width: 550px; }
-        .hero-badge {
-            display: inline-block;
-            background: rgba(255,255,255,0.2);
-            backdrop-filter: blur(10px);
-            padding: 6px 14px;
-            border-radius: 50px;
-            font-size: 0.8rem;
-            font-weight: 700;
-            margin-bottom: 15px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .hero-text h2 { font-size: 2rem; font-weight: 800; margin-bottom: 8px; }
+        .hero-text p { font-size: 1rem; opacity: 0.9; }
 
-        /* VENTAJAS / VALUE PROPOSITION */
-        .features-grid {
-            max-width: 1280px;
-            margin: 25px auto;
-            padding: 0 20px;
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
-            gap: 15px;
-        }
-        .feature-item {
-            background: white;
-            border: 1px solid var(--border);
-            padding: 16px 20px;
-            border-radius: 14px;
-            display: flex;
-            align-items: center;
-            gap: 14px;
-        }
-        .feature-icon {
-            width: 44px;
-            height: 44px;
-            border-radius: 10px;
-            background: #eff6ff;
-            color: var(--primary-accent);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            font-size: 1.2rem;
-        }
-        .feature-text h4 { font-size: 0.92rem; font-weight: 700; }
-        .feature-text p { font-size: 0.78rem; color: var(--text-muted); }
-
-        /* LAYOUT PRINCIPAL DE TIENDA */
+        /* STORE LAYOUT */
         .store-layout {
             max-width: 1280px;
             margin: 30px auto;
             padding: 0 20px;
             display: grid;
-            grid-template-columns: 260px 1fr;
+            grid-template-columns: 270px 1fr;
             gap: 30px;
         }
 
-        /* SIDEBAR DE SUBCATEGORÍAS & FILTROS */
+        /* SIDEBAR FILTERS */
         .sidebar {
             background: white;
             border: 1px solid var(--border);
             border-radius: 16px;
-            padding: 24px;
+            padding: 22px;
             height: fit-content;
             position: sticky;
             top: 90px;
         }
-        .sidebar-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            margin-bottom: 16px;
-            padding-bottom: 10px;
+        .sidebar-section {
+            margin-bottom: 24px;
+            padding-bottom: 18px;
             border-bottom: 1px solid var(--border);
+        }
+        .sidebar-section:last-child { margin-bottom: 0; padding-bottom: 0; border-bottom: none; }
+        .sidebar-title {
+            font-size: 0.95rem;
+            font-weight: 800;
+            margin-bottom: 12px;
             display: flex;
             justify-content: space-between;
             align-items: center;
+            color: var(--primary);
         }
-        .subcat-group { margin-bottom: 20px; }
-        .subcat-group h5 { font-size: 0.82rem; text-transform: uppercase; color: var(--text-muted); letter-spacing: 0.8px; margin-bottom: 10px; }
-        .subcat-list { list-style: none; display: flex; flex-direction: column; gap: 4px; }
-        .subcat-item-btn {
+        .filter-btn-clear {
+            font-size: 0.75rem;
+            color: var(--primary-accent);
+            cursor: pointer;
+            font-weight: 600;
+            background: none;
+            border: none;
+        }
+
+        .filter-list { list-style: none; display: flex; flex-direction: column; gap: 5px; max-height: 230px; overflow-y: auto; }
+        .filter-item-btn {
             background: transparent;
             border: none;
             text-align: left;
-            padding: 8px 12px;
+            padding: 7px 10px;
             border-radius: 8px;
-            font-size: 0.88rem;
+            font-size: 0.86rem;
             color: var(--text);
             cursor: pointer;
             display: flex;
@@ -288,21 +254,53 @@
             transition: 0.2s;
             width: 100%;
         }
-        .subcat-item-btn:hover, .subcat-item-btn.active {
+        .filter-item-btn:hover, .filter-item-btn.active {
             background: #eff6ff;
             color: var(--primary-accent);
             font-weight: 700;
         }
+        .filter-badge {
+            background: #f1f5f9;
+            color: var(--text-muted);
+            padding: 2px 7px;
+            border-radius: 12px;
+            font-size: 0.72rem;
+            font-weight: 600;
+        }
+        .filter-item-btn.active .filter-badge {
+            background: var(--primary-accent);
+            color: white;
+        }
 
-        /* GRID DE PRODUCTOS */
+        /* PRODUCTS GRID */
         .catalog-header {
             display: flex;
             justify-content: space-between;
             align-items: center;
             margin-bottom: 20px;
+            flex-wrap: wrap;
+            gap: 10px;
         }
-        .catalog-header h3 { font-size: 1.3rem; font-weight: 800; }
-        .catalog-header span { font-size: 0.88rem; color: var(--text-muted); font-weight: 500; }
+        .catalog-header h3 { font-size: 1.25rem; font-weight: 800; }
+        .active-tags-bar {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+            margin-bottom: 15px;
+        }
+        .tag-pill {
+            background: #eff6ff;
+            color: var(--primary-accent);
+            border: 1px solid #bfdbfe;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .tag-pill i { cursor: pointer; }
 
         .products-grid {
             display: grid;
@@ -310,7 +308,7 @@
             gap: 22px;
         }
 
-        /* TARJETA DE PRODUCTO */
+        /* PRODUCT CARD */
         .product-card {
             background: white;
             border: 1px solid var(--border);
@@ -340,10 +338,8 @@
             object-fit: cover;
             transition: transform 0.4s ease;
         }
-        .product-card:hover .img-box img {
-            transform: scale(1.05);
-        }
-        .badge-subcat {
+        .product-card:hover .img-box img { transform: scale(1.05); }
+        .badge-brand {
             position: absolute;
             top: 10px;
             left: 10px;
@@ -355,6 +351,17 @@
             font-weight: 700;
             backdrop-filter: blur(5px);
             text-transform: uppercase;
+        }
+        .badge-subcat {
+            position: absolute;
+            top: 10px;
+            right: 10px;
+            background: rgba(37, 99, 235, 0.9);
+            color: white;
+            padding: 4px 8px;
+            border-radius: 6px;
+            font-size: 0.7rem;
+            font-weight: 700;
         }
         .btn-quick-view {
             position: absolute;
@@ -381,12 +388,30 @@
             flex-direction: column;
             flex-grow: 1;
         }
-        .card-category { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+        .card-brand-meta {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            font-size: 0.76rem;
+            margin-bottom: 6px;
+        }
+        .card-brand-text {
+            color: var(--brand-text);
+            background: var(--brand-tag);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-weight: 700;
+        }
+        .card-cat-text {
+            color: var(--text-muted);
+            font-weight: 600;
+            text-transform: uppercase;
+        }
         .card-title {
-            font-size: 0.98rem;
+            font-size: 0.96rem;
             font-weight: 700;
             color: var(--primary);
-            margin-bottom: 10px;
+            margin-bottom: 12px;
             line-height: 1.35;
             cursor: pointer;
         }
@@ -438,7 +463,7 @@
         }
         .btn-wa-single:hover { background: var(--whatsapp); color: white; }
 
-        /* MODAL DE VISTA RÁPIDA */
+        /* QUICK VIEW MODAL */
         .modal-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -479,12 +504,13 @@
             display: flex;
             align-items: center;
             justify-content: center;
+            z-index: 10;
         }
         .modal-img-container { background: #f8fafc; height: 100%; min-height: 320px; }
         .modal-img-container img { width: 100%; height: 100%; object-fit: cover; }
         .modal-info { padding: 30px; display: flex; flex-direction: column; }
 
-        /* CARRITO DESLIZABLE (DRAWER) */
+        /* CART DRAWER */
         .cart-overlay {
             position: fixed;
             top: 0; left: 0;
@@ -519,29 +545,6 @@
             align-items: center;
         }
         .cart-header h3 { font-size: 1.2rem; font-weight: 800; display: flex; align-items: center; gap: 8px; }
-        
-        /* FREE SHIPPING PROGRESS BAR */
-        .shipping-progress {
-            background: #eff6ff;
-            padding: 12px 24px;
-            border-bottom: 1px solid var(--border);
-            font-size: 0.82rem;
-            color: #1e3a8a;
-            font-weight: 600;
-        }
-        .progress-bar-bg {
-            background: #dbeafe;
-            height: 6px;
-            border-radius: 10px;
-            margin-top: 6px;
-            overflow: hidden;
-        }
-        .progress-bar-fill {
-            background: var(--primary-accent);
-            height: 100%;
-            width: 30%;
-            transition: width 0.3s ease;
-        }
 
         .cart-body {
             flex-grow: 1;
@@ -560,8 +563,9 @@
         }
         .cart-item img { width: 65px; height: 65px; object-fit: cover; border-radius: 10px; }
         .cart-item-details { flex-grow: 1; }
-        .cart-item-details h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 4px; }
-        .cart-item-price { color: var(--price); font-weight: 800; font-size: 0.95rem; }
+        .cart-item-details h4 { font-size: 0.9rem; font-weight: 700; margin-bottom: 2px; }
+        .cart-item-brand { font-size: 0.75rem; color: var(--brand-text); font-weight: 700; }
+        .cart-item-price { color: var(--price); font-weight: 800; font-size: 0.95rem; margin-top: 4px; }
         
         .qty-controls {
             display: flex;
@@ -682,7 +686,6 @@
         /* RESPONSIVE */
         @media (max-width: 900px) {
             .store-layout { grid-template-columns: 1fr; }
-            .sidebar { display: none; } /* En móvil se usan las categorías de la barra superior */
             .modal-box { grid-template-columns: 1fr; }
             .modal-img-container { height: 200px; min-height: auto; }
             .topbar { display: none; }
@@ -693,7 +696,7 @@
 </head>
 <body>
 
-    <!-- TOPBAR ANUNCIO -->
+    <!-- TOPBAR -->
     <div class="topbar-wrapper">
         <div class="topbar">
             <span>✨ <b>NovaShop Bolivia:</b> Entregas directas en La Paz y envíos nacionales 🇧🇴</span>
@@ -704,7 +707,7 @@
         </div>
     </div>
 
-    <!-- NAVEGACIÓN -->
+    <!-- NAVBAR -->
     <nav>
         <div class="nav-container">
             <a href="#" class="brand">
@@ -715,13 +718,13 @@
                 </div>
             </a>
 
-            <!-- BUSCADOR CENTRAL -->
+            <!-- BUSCADOR -->
             <div class="search-bar-center">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Buscar productos, herramientas, hogar, autos..." oninput="filtrarProductos()">
+                <input type="text" id="searchInput" placeholder="Buscar por producto, marca, categoría..." oninput="filtrarProductos()">
             </div>
 
-            <!-- BOTON CARRITO -->
+            <!-- CARRITO -->
             <div class="nav-actions">
                 <button class="btn-cart-nav" onclick="toggleCart()">
                     <i class="fa-solid fa-cart-shopping"></i>
@@ -732,82 +735,66 @@
         </div>
     </nav>
 
-    <!-- BARRA HORIZONTAL DE CATEGORÍAS TIPO WIX -->
+    <!-- BARRA SUPERIOR DE CATEGORÍAS -->
     <div class="categories-strip">
         <div class="categories-strip-inner" id="horizontalCategories">
             <button class="pill-category active" onclick="seleccionarCategoria('todas')">
                 <i class="fa-solid fa-border-all"></i> Todas las Categorías
             </button>
-            <!-- Llenado dinámico -->
         </div>
     </div>
 
-    <!-- BANNER HERO PROMO -->
+    <!-- HERO PROMO -->
     <div class="hero-banner">
         <div class="hero-card">
             <div class="hero-text">
-                <span class="hero-badge">🔥 Catálogo Actualizado 2026</span>
-                <h2>Todo lo que necesitas para tu Hogar, Taller y Aventura</h2>
-                <p>Explora nuestras secciones, añade al carrito y confirma tu pedido al instante por WhatsApp.</p>
+                <h2>Encuentra tus Marcas Favoritas y Herramientas</h2>
+                <p>Parkside, Silvercrest, Sanitas y más con compra directa por WhatsApp.</p>
             </div>
         </div>
     </div>
 
-    <!-- CARACTERÍSTICAS / VALUE PROPOSITION -->
-    <div class="features-grid">
-        <div class="feature-item">
-            <div class="feature-icon"><i class="fa-solid fa-truck-fast"></i></div>
-            <div class="feature-text">
-                <h4>Envíos en La Paz</h4>
-                <p>Coordinamos entregas rápidas</p>
-            </div>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon"><i class="fa-brands fa-whatsapp"></i></div>
-            <div class="feature-text">
-                <h4>Atención Personalizada</h4>
-                <p>Compra directa por WhatsApp</p>
-            </div>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon"><i class="fa-solid fa-shield-check"></i></div>
-            <div class="feature-text">
-                <h4>Productos Garantizados</h4>
-                <p>Calidad 100% revisada</p>
-            </div>
-        </div>
-        <div class="feature-item">
-            <div class="feature-icon"><i class="fa-solid fa-hand-holding-dollar"></i></div>
-            <div class="feature-text">
-                <h4>Precios Competitivos</h4>
-                <p>Los mejores precios en Bs.</p>
-            </div>
-        </div>
-    </div>
-
-    <!-- CONTENEDOR PRINCIPAL DE TIENDA -->
+    <!-- TIENDA PRINCIPAL -->
     <div class="store-layout" id="catalogo">
         
-        <!-- SIDEBAR DE SUBCATEGORÍAS -->
+        <!-- SIDEBAR DE FILTROS (SUBCATEGORÍAS + MARCAS) -->
         <aside class="sidebar">
-            <div class="sidebar-title">
-                <span><i class="fa-solid fa-filter"></i> Subcategorías</span>
-                <span style="font-size: 0.8rem; color: var(--primary-accent); cursor: pointer;" onclick="seleccionarCategoria('todas')">Limpiar</span>
-            </div>
             
-            <div id="sidebarSubcategories">
-                <!-- Se llenará dinámicamente -->
+            <!-- FILTRO DE SUBCATEGORÍAS -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">
+                    <span><i class="fa-solid fa-layer-group"></i> Subcategorías</span>
+                    <button class="filter-btn-clear" onclick="limpiarSubcategoria()">Ver todas</button>
+                </div>
+                <ul class="filter-list" id="sidebarSubcategories">
+                    <!-- Dinámico -->
+                </ul>
             </div>
+
+            <!-- FILTRO DE MARCAS -->
+            <div class="sidebar-section">
+                <div class="sidebar-title">
+                    <span><i class="fa-solid fa-tags"></i> Marcas</span>
+                    <button class="filter-btn-clear" onclick="limpiarMarca()">Todas</button>
+                </div>
+                <ul class="filter-list" id="sidebarBrands">
+                    <!-- Dinámico -->
+                </ul>
+            </div>
+
         </aside>
 
-        <!-- CATÁLOGO DE PRODUCTOS -->
+        <!-- CATÁLOGO -->
         <main>
             <div class="catalog-header">
                 <div>
                     <h3 id="currentCategoryTitle">Todos los Productos</h3>
-                    <span id="productCounterText">Cargando catálogo...</span>
+                    <span id="productCounterText" style="color: var(--text-muted); font-size: 0.88rem;">Cargando...</span>
                 </div>
             </div>
+
+            <!-- PILLS DE FILTROS ACTIVOS -->
+            <div class="active-tags-bar" id="activeTagsBar"></div>
 
             <div class="products-grid" id="productsGrid">
                 <!-- Grid de productos -->
@@ -816,7 +803,7 @@
 
     </div>
 
-    <!-- MODAL DE VISTA RÁPIDA -->
+    <!-- MODAL VISTA RÁPIDA -->
     <div class="modal-overlay" id="quickViewModal">
         <div class="modal-box">
             <button class="modal-close" onclick="cerrarQuickView()"><i class="fa-solid fa-xmark"></i></button>
@@ -824,8 +811,11 @@
                 <img id="modalImg" src="" alt="Producto">
             </div>
             <div class="modal-info">
-                <span id="modalCatBadge" class="badge-subcat" style="position: static; align-self: flex-start; margin-bottom: 10px;"></span>
-                <h2 id="modalTitle" style="font-size: 1.3rem; margin-bottom: 10px;"></h2>
+                <div style="display: flex; gap: 8px; margin-bottom: 10px;">
+                    <span id="modalBrandBadge" class="card-brand-text"></span>
+                    <span id="modalCatBadge" class="badge-subcat" style="position: static;"></span>
+                </div>
+                <h2 id="modalTitle" style="font-size: 1.3rem; margin-bottom: 6px;"></h2>
                 <p id="modalSubcat" style="color: var(--text-muted); font-size: 0.88rem; margin-bottom: 15px;"></p>
                 <div style="font-size: 1.8rem; font-weight: 800; color: var(--price); margin-bottom: 25px;">
                     <span id="modalPrice"></span> <span style="font-size: 1rem;">Bs.</span>
@@ -842,7 +832,7 @@
         </div>
     </div>
 
-    <!-- MODAL / DRAWER DEL CARRITO -->
+    <!-- DRAWER DEL CARRITO -->
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
@@ -850,16 +840,7 @@
             <button onclick="toggleCart()" style="background: transparent; border: none; font-size: 1.2rem; cursor: pointer;"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
-        <div class="shipping-progress">
-            <span id="shippingText">🚚 ¡Agrega productos para tu pedido!</span>
-            <div class="progress-bar-bg">
-                <div class="progress-bar-fill" id="shippingProgressFill" style="width: 50%;"></div>
-            </div>
-        </div>
-
-        <div class="cart-body" id="cartBodyItems">
-            <!-- Items del carrito -->
-        </div>
+        <div class="cart-body" id="cartBodyItems"></div>
 
         <div class="cart-footer">
             <div class="cart-total-row">
@@ -889,11 +870,11 @@
         <div class="footer-grid">
             <div class="footer-col">
                 <h4>🏪 NovaShop Bolivia</h4>
-                <p>Tu tienda de confianza en La Paz. Artículos de hogar, mecánica, outdoors, herramientas y mucho más con atención rápida.</p>
+                <p>Tu tienda de confianza en La Paz. Artículos de hogar, mecánica, outdoors, herramientas y marcas originales con atención rápida.</p>
             </div>
             <div class="footer-col">
                 <h4>📦 Envíos y Entregas</h4>
-                <p>• Entregas a domicilio en La Paz y El Alto<br>• Envíos a todo el territorio boliviano vía encomienda<br>• Pagos coordinados por WhatsApp</p>
+                <p>• Entregas a domicilio en La Paz y El Alto<br>• Envíos a todo Bolivia vía encomienda<br>• Pagos coordinados por WhatsApp</p>
             </div>
             <div class="footer-col" id="contacto">
                 <h4>📲 Contáctanos</h4>
@@ -908,7 +889,6 @@
     <script>
         // ================= CONFIGURACIÓN =================
         const BACKEND_URL = 'https://novashop-backend-wbaj.onrender.com/api/productos';
-        
         // 👉 REEMPLAZA CON TU NÚMERO DE WHATSAPP REAL (Ej: 59171234567 para Bolivia)
         const WHATSAPP_PHONE = '59170000000'; 
         // =================================================
@@ -918,9 +898,10 @@
         let listaProductos = [];
         let categoriaActiva = 'todas';
         let subcategoriaActiva = 'todas';
+        let marcaActiva = 'todas';
         let carrito = JSON.parse(localStorage.getItem('novashop_wix_cart')) || [];
 
-        // 1. CARGA DE DATOS DE RENDER/SUPABASE
+        // 1. CARGA INICIAL
         async function inicializarTienda() {
             try {
                 const res = await fetch(BACKEND_URL);
@@ -928,6 +909,7 @@
                 listaProductos = await res.json();
 
                 generarMenuCategorias();
+                generarMenuFiltros();
                 renderizarGrid(listaProductos);
                 actualizarCarritoUI();
             } catch (err) {
@@ -940,27 +922,11 @@
             }
         }
 
-        // 2. CREACIÓN DE CATEGORÍAS & SUBCATEGORÍAS
+        // 2. CONSTRUIR FILTROS DINÁMICOS
         function generarMenuCategorias() {
-            const mapaCategorias = {}; // { 'Hogar': Set('Cocina', ...), 'Mecanica': Set('Llaves', ...) }
-            
-            const iconosCat = {
-                'hogar': 'fa-house',
-                'mecanica': 'fa-wrench',
-                'outdoor': 'fa-campground',
-                'salud': 'fa-heart-pulse',
-                'autos': 'fa-car',
-                'herramientas': 'fa-screwdriver-wrench'
-            };
+            const categorias = new Set();
+            listaProductos.forEach(p => { if (p.categoria) categorias.add(p.categoria); });
 
-            listaProductos.forEach(p => {
-                const cat = p.categoria || 'Otros';
-                const sub = p.subcategoria;
-                if (!mapaCategorias[cat]) mapaCategorias[cat] = new Set();
-                if (sub) mapaCategorias[cat].add(sub);
-            });
-
-            // Llenar barra horizontal superior
             const strip = document.getElementById('horizontalCategories');
             strip.innerHTML = `
                 <button class="pill-category ${categoriaActiva === 'todas' ? 'active' : ''}" onclick="seleccionarCategoria('todas')">
@@ -968,70 +934,111 @@
                 </button>
             `;
 
-            for (const cat of Object.keys(mapaCategorias)) {
-                const icono = iconosCat[cat.toLowerCase()] || 'fa-tag';
+            categorias.forEach(cat => {
                 const btn = document.createElement('button');
                 btn.className = `pill-category ${categoriaActiva === cat ? 'active' : ''}`;
-                btn.innerHTML = `<i class="fa-solid ${icono}"></i> ${cat}`;
+                btn.innerHTML = `<span>📦 ${cat}</span>`;
                 btn.onclick = () => seleccionarCategoria(cat);
                 strip.appendChild(btn);
-            }
-
-            // Llenar sidebar de subcategorías
-            actualizarSidebarSubcategorias(mapaCategorias);
+            });
         }
 
-        function actualizarSidebarSubcategorias(mapaCategorias) {
-            const container = document.getElementById('sidebarSubcategories');
-            container.innerHTML = '';
+        function generarMenuFiltros() {
+            // A) Subcategorías
+            const subcatsCount = {};
+            const marcasCount = {};
 
-            for (const [cat, subcats] of Object.entries(mapaCategorias)) {
-                if (categoriaActiva !== 'todas' && categoriaActiva !== cat) continue;
+            listaProductos.forEach(p => {
+                // Si hay categoría seleccionada, solo contar las de esa categoría
+                const matchCat = (categoriaActiva === 'todas') || (p.categoria === categoriaActiva);
+                if (matchCat && p.subcategoria) {
+                    subcatsCount[p.subcategoria] = (subcatsCount[p.subcategoria] || 0) + 1;
+                }
+                if (p.marca) {
+                    marcasCount[p.marca] = (marcasCount[p.marca] || 0) + 1;
+                }
+            });
 
-                const group = document.createElement('div');
-                group.className = 'subcat-group';
-                group.innerHTML = `<h5>${cat}</h5>`;
-
-                const ul = document.createElement('ul');
-                ul.className = 'subcat-list';
-
-                // Opción ver todas de esa categoría
-                const liAll = document.createElement('li');
-                liAll.innerHTML = `
-                    <button class="subcat-item-btn ${categoriaActiva === cat && subcategoriaActiva === 'todas' ? 'active' : ''}" onclick="seleccionarSubcategoria('${cat}', 'todas')">
-                        <span>• Ver todo ${cat}</span>
-                    </button>
-                `;
-                ul.appendChild(liAll);
-
-                subcats.forEach(sub => {
-                    const li = document.createElement('li');
-                    li.innerHTML = `
-                        <button class="subcat-item-btn ${subcategoriaActiva === sub ? 'active' : ''}" onclick="seleccionarSubcategoria('${cat}', '${sub}')">
+            // Llenar Subcategorías
+            const subContainer = document.getElementById('sidebarSubcategories');
+            if (Object.keys(subcatsCount).length === 0) {
+                subContainer.innerHTML = `<li style="font-size: 0.8rem; color: var(--text-muted); padding: 5px;">No hay subcategorías</li>`;
+            } else {
+                subContainer.innerHTML = Object.entries(subcatsCount).map(([sub, count]) => `
+                    <li>
+                        <button class="filter-item-btn ${subcategoriaActiva === sub ? 'active' : ''}" onclick="seleccionarSubcategoria('${sub}')">
                             <span>• ${sub}</span>
+                            <span class="filter-badge">${count}</span>
                         </button>
-                    `;
-                    ul.appendChild(li);
-                });
-
-                group.appendChild(ul);
-                container.appendChild(group);
+                    </li>
+                `).join('');
             }
+
+            // Llenar Marcas
+            const brandContainer = document.getElementById('sidebarBrands');
+            if (Object.keys(marcasCount).length === 0) {
+                brandContainer.innerHTML = `<li style="font-size: 0.8rem; color: var(--text-muted); padding: 5px;">Sin marcas registradas</li>`;
+            } else {
+                brandContainer.innerHTML = Object.entries(marcasCount).map(([marca, count]) => `
+                    <li>
+                        <button class="filter-item-btn ${marcaActiva === marca ? 'active' : ''}" onclick="seleccionarMarca('${marca}')">
+                            <span>🏷️ ${marca}</span>
+                            <span class="filter-badge">${count}</span>
+                        </button>
+                    </li>
+                `).join('');
+            }
+
+            renderizarTagsActivos();
         }
 
-        // 3. FILTRADO
+        function renderizarTagsActivos() {
+            const bar = document.getElementById('activeTagsBar');
+            let tags = [];
+
+            if (categoriaActiva !== 'todas') {
+                tags.push(`<span class="tag-pill">Categoría: ${categoriaActiva} <i class="fa-solid fa-xmark" onclick="seleccionarCategoria('todas')"></i></span>`);
+            }
+            if (subcategoriaActiva !== 'todas') {
+                tags.push(`<span class="tag-pill">Subcategoría: ${subcategoriaActiva} <i class="fa-solid fa-xmark" onclick="limpiarSubcategoria()"></i></span>`);
+            }
+            if (marcaActiva !== 'todas') {
+                tags.push(`<span class="tag-pill">Marca: ${marcaActiva} <i class="fa-solid fa-xmark" onclick="limpiarMarca()"></i></span>`);
+            }
+
+            bar.innerHTML = tags.join('');
+        }
+
+        // 3. ACCIONES DE FILTRO
         function seleccionarCategoria(cat) {
             categoriaActiva = cat;
             subcategoriaActiva = 'todas';
-            document.querySelectorAll('.pill-category').forEach(el => el.classList.remove('active'));
             generarMenuCategorias();
+            generarMenuFiltros();
             filtrarProductos();
         }
 
-        function seleccionarSubcategoria(cat, sub) {
-            categoriaActiva = cat;
+        function seleccionarSubcategoria(sub) {
             subcategoriaActiva = sub;
-            generarMenuCategorias();
+            generarMenuFiltros();
+            filtrarProductos();
+        }
+
+        function seleccionarMarca(marca) {
+            marcaActiva = marca;
+            generarMenuFiltros();
+            filtrarProductos();
+        }
+
+        function limpiarSubcategoria() {
+            subcategoriaActiva = 'todas';
+            generarMenuFiltros();
+            filtrarProductos();
+        }
+
+        function limpiarMarca() {
+            marcaActiva = 'todas';
+            generarMenuFiltros();
             filtrarProductos();
         }
 
@@ -1041,48 +1048,59 @@
             const filtrados = listaProductos.filter(p => {
                 const matchCat = (categoriaActiva === 'todas') || (p.categoria === categoriaActiva);
                 const matchSub = (subcategoriaActiva === 'todas') || (p.subcategoria === subcategoriaActiva);
-                const matchSearch = p.nombre.toLowerCase().includes(query) || (p.categoria && p.categoria.toLowerCase().includes(query)) || (p.subcategoria && p.subcategoria.toLowerCase().includes(query));
-                return matchCat && matchSub && matchSearch;
+                const matchMarca = (marcaActiva === 'todas') || (p.marca && p.marca.toLowerCase() === marcaActiva.toLowerCase());
+                
+                const matchSearch = p.nombre.toLowerCase().includes(query) || 
+                                    (p.categoria && p.categoria.toLowerCase().includes(query)) || 
+                                    (p.subcategoria && p.subcategoria.toLowerCase().includes(query)) ||
+                                    (p.marca && p.marca.toLowerCase().includes(query));
+
+                return matchCat && matchSub && matchMarca && matchSearch;
             });
 
-            // Título de la sección
-            let title = 'Todos los Productos';
-            if (categoriaActiva !== 'todas') title = categoriaActiva;
-            if (subcategoriaActiva !== 'todas') title += ` ➔ ${subcategoriaActiva}`;
+            // Título
+            let title = categoriaActiva === 'todas' ? 'Todos los Productos' : categoriaActiva;
+            if (marcaActiva !== 'todas') title += ` • Marca: ${marcaActiva}`;
             document.getElementById('currentCategoryTitle').textContent = title;
 
+            renderizarTagsActivos();
             renderizarGrid(filtrados);
         }
 
-        // 4. RENDERIZADO DE TARJETAS
+        // 4. RENDERIZADO DEL CATÁLOGO
         function renderizarGrid(productos) {
             const grid = document.getElementById('productsGrid');
-            document.getElementById('productCounterText').textContent = `${productos.length} artículos disponibles`;
+            document.getElementById('productCounterText').textContent = `${productos.length} artículos encontrados`;
 
             if (productos.length === 0) {
                 grid.innerHTML = `
                     <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
                         <i class="fa-solid fa-box-open fa-3x" style="opacity: 0.3; margin-bottom: 15px;"></i>
-                        <h3>No encontramos productos</h3>
-                        <p>Intenta con otra categoría o término de búsqueda.</p>
+                        <h3>No encontramos coincidencias</h3>
+                        <p>Prueba cambiando los filtros de marca o categoría.</p>
                     </div>`;
                 return;
             }
 
             grid.innerHTML = productos.map(prod => {
                 const foto = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
-                const msgWa = `Hola! Quiero pedir 1 unidad de: ${prod.nombre} (${prod.precio} Bs.)`;
+                const msgWa = `Hola! Quiero comprar 1 unidad de: ${prod.nombre} ${prod.marca ? '('+prod.marca+')' : ''} - Precio: ${prod.precio} Bs.`;
                 const linkDirectoWa = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msgWa)}`;
 
                 return `
                     <div class="product-card">
                         <div class="img-box" onclick="abrirQuickView(${prod.id})">
                             <img src="${foto}" alt="${prod.nombre}" loading="lazy">
-                            <span class="badge-subcat">${prod.subcategoria || prod.categoria || 'Novedad'}</span>
+                            ${prod.marca ? `<span class="badge-brand">${prod.marca}</span>` : ''}
+                            ${prod.subcategoria ? `<span class="badge-subcat">${prod.subcategoria}</span>` : ''}
                             <button class="btn-quick-view"><i class="fa-regular fa-eye"></i> Vista Rápida</button>
                         </div>
                         <div class="card-body">
-                            <span class="card-category">${prod.categoria || 'General'}</span>
+                            <div class="card-brand-meta">
+                                ${prod.marca ? `<span class="card-brand-text">🏷️ ${prod.marca}</span>` : '<span></span>'}
+                                <span class="card-cat-text">${prod.categoria || 'General'}</span>
+                            </div>
+                            
                             <h4 class="card-title" onclick="abrirQuickView(${prod.id})">${prod.nombre}</h4>
                             
                             <div class="card-price-row">
@@ -1111,8 +1129,10 @@
 
             document.getElementById('modalImg').src = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
             document.getElementById('modalTitle').textContent = prod.nombre;
+            document.getElementById('modalBrandBadge').textContent = prod.marca ? `Marca: ${prod.marca}` : '';
+            document.getElementById('modalBrandBadge').style.display = prod.marca ? 'inline-block' : 'none';
             document.getElementById('modalCatBadge').textContent = prod.categoria || 'Tienda';
-            document.getElementById('modalSubcat').textContent = prod.subcategoria ? `Sección: ${prod.subcategoria}` : '';
+            document.getElementById('modalSubcat').textContent = prod.subcategoria ? `Subcategoría: ${prod.subcategoria}` : '';
             document.getElementById('modalPrice').textContent = prod.precio;
 
             document.getElementById('modalBtnAddCart').onclick = () => {
@@ -1120,7 +1140,7 @@
                 cerrarQuickView();
             };
 
-            const msgWa = `Hola! Quiero pedir el producto: ${prod.nombre} por ${prod.precio} Bs.`;
+            const msgWa = `Hola! Quiero pedir el producto: ${prod.nombre} ${prod.marca ? '('+prod.marca+')' : ''} por ${prod.precio} Bs.`;
             document.getElementById('modalBtnWaDirect').href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msgWa)}`;
 
             document.getElementById('quickViewModal').classList.add('open');
@@ -1130,7 +1150,7 @@
             document.getElementById('quickViewModal').classList.remove('open');
         }
 
-        // 6. LÓGICA DEL CARRITO
+        // 6. CARRITO
         function toggleCart() {
             document.getElementById('cartDrawer').classList.toggle('open');
             document.getElementById('cartOverlay').classList.toggle('open');
@@ -1147,6 +1167,7 @@
                 carrito.push({
                     id: prod.id,
                     nombre: prod.nombre,
+                    marca: prod.marca || '',
                     precio: parseFloat(prod.precio),
                     imagen_url: prod.imagen_url,
                     cantidad: 1
@@ -1156,7 +1177,6 @@
             guardarCarrito();
             actualizarCarritoUI();
             
-            // Abre el carrito para confirmar la acción
             document.getElementById('cartDrawer').classList.add('open');
             document.getElementById('cartOverlay').classList.add('open');
         }
@@ -1210,6 +1230,7 @@
                         <img src="${foto}" alt="${item.nombre}">
                         <div class="cart-item-details">
                             <h4>${item.nombre}</h4>
+                            ${item.marca ? `<div class="cart-item-brand">Marca: ${item.marca}</div>` : ''}
                             <div class="cart-item-price">${item.precio} Bs.</div>
                             <div class="qty-controls">
                                 <button class="btn-qty" onclick="cambiarCantidad(${item.id}, -1)">-</button>
@@ -1249,7 +1270,8 @@
             carrito.forEach((item, index) => {
                 const sub = item.precio * item.cantidad;
                 total += sub;
-                listado += `${index + 1}. *${item.nombre}*\n   ▪️ Cant: ${item.cantidad} x ${item.precio} Bs. = *${sub.toFixed(2)} Bs.*\n`;
+                const marcaStr = item.marca ? ` [${item.marca}]` : '';
+                listado += `${index + 1}. *${item.nombre}*${marcaStr}\n   ▪️ Cant: ${item.cantidad} x ${item.precio} Bs. = *${sub.toFixed(2)} Bs.*\n`;
             });
 
             const mensaje = 
@@ -1270,7 +1292,7 @@ ${notas ? `📝 *Notas:* ${notas}\n` : ''}
             window.open(url, '_blank');
         }
 
-        // Iniciar tienda
+        // Iniciar
         inicializarTienda();
     </script>
 </body>
