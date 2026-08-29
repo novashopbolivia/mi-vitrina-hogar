@@ -112,7 +112,7 @@
             font-size: 1.1rem;
         }
 
-        /* BOTON CARRITO HEADER */
+        /* BOTON CARRITO */
         .header-actions { display: flex; align-items: center; gap: 12px; }
         .btn-header-cart {
             background: white;
@@ -139,7 +139,7 @@
             font-weight: 800;
         }
 
-        /* BARRA DE CATEGORÍAS (SIN SCROLLBAR AL HACER HOVER) */
+        /* BARRA DE CATEGORÍAS */
         .nav-categories-bar {
             background: white;
             border-bottom: 1px solid var(--border);
@@ -176,8 +176,6 @@
             color: var(--sunset-dark);
             background: var(--sunset-light);
         }
-        
-        /* ESTADO ACTIVO EXACTO */
         .nav-item.active .nav-link-btn {
             color: var(--sunset-dark);
             border-bottom-color: var(--sunset-dark);
@@ -227,7 +225,7 @@
             padding-left: 24px;
         }
 
-        /* CARRUSEL PROMOCIONAL */
+        /* CARRUSEL */
         .carousel-section {
             max-width: 1320px;
             margin: 20px auto 0;
@@ -462,7 +460,7 @@
             gap: 24px;
         }
 
-        /* TARJETA PRODUCTO ESTILO WIX */
+        /* TARJETA PRODUCTO */
         .product-card {
             background: white;
             border: 1px solid var(--border);
@@ -542,7 +540,6 @@
             cursor: pointer;
         }
 
-        /* PRECIOS CON TACHADO (IGUAL A IMAGEN DE REFERENCIA) */
         .card-price-box {
             margin-top: auto;
             margin-bottom: 15px;
@@ -568,7 +565,6 @@
             color: var(--primary);
         }
 
-        /* BOTÓN COMPLETO AÑADIR AL CARRITO */
         .btn-card-cart-full {
             background: var(--sunset-dark);
             color: white;
@@ -714,9 +710,14 @@
             padding: 18px 22px;
             border-top: 1px solid var(--border);
             background: #faf8f6;
-            max-height: 60vh;
+            max-height: 65vh;
             overflow-y: auto;
+            display: none; /* Se muestra solo si hay items */
         }
+        .cart-checkout-footer.show {
+            display: block;
+        }
+
         .cart-total-display {
             display: flex;
             justify-content: space-between;
@@ -726,7 +727,7 @@
             color: var(--primary);
         }
 
-        /* MÉTODO DE ENTREGA (SINGLE SELECT OBLIGATORIO) */
+        /* MÉTODO DE ENTREGA */
         .delivery-section {
             margin-bottom: 14px;
         }
@@ -767,7 +768,7 @@
         .delivery-card input[type="radio"] { accent-color: var(--sunset-dark); cursor: pointer; }
         .delivery-card span { font-size: 0.84rem; line-height: 1.2; }
 
-        /* CAMPOS DE TEXTO DEL CLIENTE */
+        /* CAMPOS DEL CLIENTE */
         .checkout-form {
             display: flex;
             flex-direction: column;
@@ -784,9 +785,9 @@
         }
         .checkout-form input:focus { border-color: var(--sunset-dark); }
 
-        /* CAMPOS EXCLUSIVOS PARA INTERIOR */
+        /* CAMPOS CONDICIONALES PARA INTERIOR */
         .interior-fields {
-            display: none; /* Se activa con JS */
+            display: none;
             flex-direction: column;
             gap: 8px;
             padding: 12px;
@@ -798,24 +799,34 @@
         .interior-fields.show { display: flex; animation: fadeIn 0.2s ease; }
         @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
 
+        /* BOTÓN WHATSAPP (CON ESTADO HABILITADO / DESHABILITADO) */
         .btn-send-whatsapp {
-            background: var(--whatsapp);
-            color: white;
+            background: #cbd5e1;
+            color: #64748b;
             border: none;
             width: 100%;
             padding: 14px;
             border-radius: var(--radius-md);
             font-size: 1rem;
             font-weight: 800;
-            cursor: pointer;
+            cursor: not-allowed;
             display: flex;
             align-items: center;
             justify-content: center;
             gap: 10px;
-            transition: 0.2s;
+            transition: all 0.25s;
+            box-shadow: none;
+        }
+        .btn-send-whatsapp.enabled {
+            background: var(--whatsapp);
+            color: white;
+            cursor: pointer;
             box-shadow: 0 4px 15px rgba(37, 211, 102, 0.35);
         }
-        .btn-send-whatsapp:hover { background: var(--whatsapp-dark); transform: scale(1.02); }
+        .btn-send-whatsapp.enabled:hover {
+            background: var(--whatsapp-dark);
+            transform: scale(1.02);
+        }
 
         .btn-wa-float {
             position: fixed;
@@ -910,11 +921,9 @@
         </div>
     </header>
 
-    <!-- MENÚ DE CATEGORÍAS (SIN SCROLLBAR AL HACER HOVER) -->
+    <!-- MENÚ DE CATEGORÍAS -->
     <nav class="nav-categories-bar">
-        <ul class="nav-categories-inner" id="navCategoryDropdowns">
-            <!-- Se llena dinámicamente -->
-        </ul>
+        <ul class="nav-categories-inner" id="navCategoryDropdowns"></ul>
     </nav>
 
     <!-- CARRUSEL PROMOCIONAL -->
@@ -1032,50 +1041,51 @@
 
         <div class="cart-items-list" id="cartItemsList"></div>
 
-        <div class="cart-checkout-footer">
+        <!-- FOOTER DE CHECKOUT (SOLO SE MUESTRA SI HAY PRODUCTOS) -->
+        <div class="cart-checkout-footer" id="cartCheckoutFooter">
             <div class="cart-total-display">
                 <span>Total a Pagar:</span>
                 <span id="cartTotalSum" style="color: var(--price);">0.00 Bs.</span>
             </div>
 
-            <!-- SELECCIÓN DE MÉTODO DE ENTREGA (SINGLE SELECT OBLIGATORIO) -->
+            <!-- SELECCIÓN DE MÉTODO DE ENTREGA (OBLIGATORIO) -->
             <div class="delivery-section">
                 <div class="delivery-title"><i class="fa-solid fa-truck-fast"></i> Método de Entrega (Obligatorio) *:</div>
                 <div class="delivery-options-grid">
-                    <label class="delivery-card" onclick="seleccionarEntrega('Entrega en Correos')">
+                    <label class="delivery-card" id="card-correos" onclick="seleccionarEntrega('Entrega en Correos')">
                         <input type="radio" name="deliveryMethod" value="Entrega en Correos" onchange="seleccionarEntrega(this.value)">
                         <span>📦 Entrega en Correos</span>
                     </label>
-                    <label class="delivery-card" onclick="seleccionarEntrega('Paquetería El Alto')">
+                    <label class="delivery-card" id="card-alto" onclick="seleccionarEntrega('Paquetería El Alto')">
                         <input type="radio" name="deliveryMethod" value="Paquetería El Alto" onchange="seleccionarEntrega(this.value)">
                         <span>🚚 Paquetería El Alto</span>
                     </label>
-                    <label class="delivery-card" onclick="seleccionarEntrega('Paquetería Zona Sur')">
+                    <label class="delivery-card" id="card-sur" onclick="seleccionarEntrega('Paquetería Zona Sur')">
                         <input type="radio" name="deliveryMethod" value="Paquetería Zona Sur" onchange="seleccionarEntrega(this.value)">
                         <span>🏠 Paquetería Zona Sur</span>
                     </label>
-                    <label class="delivery-card" onclick="seleccionarEntrega('Envío al Interior')">
+                    <label class="delivery-card" id="card-interior" onclick="seleccionarEntrega('Envío al Interior')">
                         <input type="radio" name="deliveryMethod" value="Envío al Interior" onchange="seleccionarEntrega(this.value)">
                         <span>✈️ Envío al Interior</span>
                     </label>
                 </div>
             </div>
 
-            <!-- CAMPOS CONDICIONALES PARA ENVÍO AL INTERIOR -->
+            <!-- CAMPOS EXCLUSIVOS PARA INTERIOR -->
             <div class="interior-fields" id="interiorFieldsContainer">
                 <div style="font-size: 0.82rem; font-weight: 800; color: #c2410c;">📋 Datos para encomienda nacional:</div>
-                <input type="text" id="custCity" placeholder="Ciudad / Departamento destino *">
-                <input type="text" id="custCI" placeholder="Nº Carnet de Identidad (CI) *">
-                <input type="tel" id="custPhone" placeholder="Teléfono / Celular de contacto *">
+                <input type="text" id="custCity" placeholder="Ciudad / Departamento destino *" oninput="validarFormularioCarrito()">
+                <input type="text" id="custCI" placeholder="Nº Carnet de Identidad (CI) *" oninput="validarFormularioCarrito()">
+                <input type="tel" id="custPhone" placeholder="Teléfono / Celular de contacto *" oninput="validarFormularioCarrito()">
             </div>
 
-            <!-- DATOS GENERALES -->
+            <!-- DATO NOMBRE (ÚNICO CAMPO GENERAL) -->
             <div class="checkout-form">
-                <input type="text" id="orderCustName" placeholder="Tu Nombre completo *" required>
-                <input type="text" id="orderCustAddress" placeholder="Dirección / Zona en La Paz (o destino) *" required>
+                <input type="text" id="orderCustName" placeholder="Tu Nombre completo *" required oninput="validarFormularioCarrito()">
             </div>
 
-            <button class="btn-send-whatsapp" onclick="finalizarPedidoWhatsApp()">
+            <!-- BOTÓN WHATSAPP -->
+            <button class="btn-send-whatsapp" id="btnConfirmarWhatsApp" onclick="finalizarPedidoWhatsApp()" disabled>
                 <i class="fa-brands fa-whatsapp fa-xl"></i> Confirmar Pedido por WhatsApp
             </button>
         </div>
@@ -1095,7 +1105,7 @@
             </div>
             <div>
                 <h4>📦 Envíos y Pagos</h4>
-                <p>• Entregas a domicilio en La Paz y El Alto<br>• Envíos nacionales a todos los departamentos<br>• Coordinación 100% por WhatsApp</p>
+                <p>• Entregas en Correos, El Alto y Zona Sur<br>• Envíos nacionales a todos los departamentos<br>• Coordinación 100% por WhatsApp</p>
             </div>
             <div>
                 <h4>📲 Atención al Cliente</h4>
@@ -1214,7 +1224,7 @@
             window.scrollTo({ top: 0, behavior: 'smooth' });
         }
 
-        // 3. NAVBAR SUPERIOR (SIN MARCO ERRÓNEO EN OFERTAS)
+        // 3. NAVBAR SUPERIOR
         function construirNavDropdowns() {
             const catMap = {};
 
@@ -1396,7 +1406,6 @@
         function ejecutarFiltros() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
 
-            // Ocultar carrusel al navegar
             const carouselSec = document.getElementById('promoCarouselSection');
             if (categoriaSeleccionada === 'ofertas' && query === '' && subcategoriaSeleccionada === 'todas' && marcaSeleccionada === 'todas') {
                 carouselSec.style.display = 'block';
@@ -1482,7 +1491,6 @@
                 const esOferta = (prod.en_oferta === true || prod.en_oferta === 'true' || prod.precio_anterior != null);
                 const tagTexto = esOferta ? 'Mejor oferta' : (prod.subcategoria || prod.categoria || 'Novedad');
 
-                // Renderizado de precios (con tachado si es oferta)
                 let priceHtml = '';
                 if (esOferta && prod.precio_anterior) {
                     priceHtml = `
@@ -1558,7 +1566,7 @@
             document.getElementById('quickViewModal').classList.remove('open');
         }
 
-        // 9. CARRITO & MÉTODOS DE ENTREGA
+        // 9. CARRITO Y VALIDACIONES EN TIEMPO REAL
         function toggleCart() {
             document.getElementById('cartDrawer').classList.toggle('open');
             document.getElementById('cartOverlay').classList.toggle('open');
@@ -1567,7 +1575,6 @@
         function seleccionarEntrega(metodo) {
             metodoEntregaSeleccionado = metodo;
             
-            // Actualizar estilo visual de las tarjetas
             document.querySelectorAll('.delivery-card').forEach(card => {
                 const radio = card.querySelector('input[type="radio"]');
                 if (radio.value === metodo) {
@@ -1578,13 +1585,58 @@
                 }
             });
 
-            // Mostrar/Ocultar campos exclusivos para Envío al Interior
             const interiorContainer = document.getElementById('interiorFieldsContainer');
             if (metodo === 'Envío al Interior') {
                 interiorContainer.classList.add('show');
             } else {
                 interiorContainer.classList.remove('show');
             }
+
+            validarFormularioCarrito();
+        }
+
+        function validarFormularioCarrito() {
+            const btnWa = document.getElementById('btnConfirmarWhatsApp');
+            
+            // 1. Debe haber items en carrito
+            if (carrito.length === 0) {
+                deshabilitarBoton(btnWa);
+                return;
+            }
+
+            // 2. Debe haber seleccionado método de entrega
+            if (!metodoEntregaSeleccionado) {
+                deshabilitarBoton(btnWa);
+                return;
+            }
+
+            // 3. Debe tener Nombre
+            const nombre = document.getElementById('orderCustName').value.trim();
+            if (!nombre) {
+                deshabilitarBoton(btnWa);
+                return;
+            }
+
+            // 4. Si es Interior, validar los 3 campos extras
+            if (metodoEntregaSeleccionado === 'Envío al Interior') {
+                const ciudad = document.getElementById('custCity').value.trim();
+                const ci = document.getElementById('custCI').value.trim();
+                const tel = document.getElementById('custPhone').value.trim();
+
+                if (!ciudad || !ci || !tel) {
+                    deshabilitarBoton(btnWa);
+                    return;
+                }
+            }
+
+            // ✅ Si todo está completo, habilitar botón
+            btnWa.disabled = false;
+            btnWa.classList.add('enabled');
+        }
+
+        function deshabilitarBoton(btn) {
+            btn.disabled = true;
+            btn.classList.remove('enabled');
         }
 
         function agregarAlCarrito(id) {
@@ -1639,16 +1691,21 @@
             document.getElementById('cartCountBadge').textContent = totalItems;
 
             const container = document.getElementById('cartItemsList');
+            const footer = document.getElementById('cartCheckoutFooter');
+
             if (carrito.length === 0) {
                 container.innerHTML = `
-                    <div style="text-align: center; padding: 50px 20px; color: var(--text-muted);">
+                    <div style="text-align: center; padding: 70px 20px; color: var(--text-muted);">
                         <i class="fa-solid fa-basket-shopping fa-3x" style="opacity: 0.25; margin-bottom: 12px;"></i>
                         <h4>Tu carrito está vacío</h4>
                         <p style="font-size: 0.85rem; margin-top: 5px;">¡Añade productos para iniciar tu compra!</p>
                     </div>`;
-                document.getElementById('cartTotalSum').textContent = '0.00 Bs.';
+                footer.classList.remove('show'); // 👉 Oculta los métodos de entrega y checkout
+                metodoEntregaSeleccionado = '';
                 return;
             }
+
+            footer.classList.add('show'); // 👉 Muestra los métodos de entrega y checkout
 
             let sumaTotal = 0;
             container.innerHTML = carrito.map(item => {
@@ -1677,40 +1734,21 @@
             }).join('');
 
             document.getElementById('cartTotalSum').textContent = `${sumaTotal.toFixed(2)} Bs.`;
+            validarFormularioCarrito();
         }
 
-        // 10. FINALIZAR COMPRA A WHATSAPP CON VALIDACIÓN ESTRICTA
+        // 10. FINALIZAR COMPRA A WHATSAPP
         function finalizarPedidoWhatsApp() {
-            if (carrito.length === 0) {
-                alert('Tu carrito está vacío.');
-                return;
-            }
-
-            // 1. Validar que seleccionó un método de entrega
-            if (!metodoEntregaSeleccionado) {
-                alert('Por favor selecciona una opción en "Método de Entrega".');
-                return;
-            }
+            if (carrito.length === 0 || !metodoEntregaSeleccionado) return;
 
             const nombre = document.getElementById('orderCustName').value.trim();
-            const direccion = document.getElementById('orderCustAddress').value.trim();
+            if (!nombre) return;
 
-            if (!nombre || !direccion) {
-                alert('Por favor completa tu Nombre y Dirección.');
-                return;
-            }
-
-            // 2. Si es Envío al Interior, validar los 3 campos extras
             let infoInteriorTexto = '';
             if (metodoEntregaSeleccionado === 'Envío al Interior') {
                 const ciudad = document.getElementById('custCity').value.trim();
                 const ci = document.getElementById('custCI').value.trim();
                 const tel = document.getElementById('custPhone').value.trim();
-
-                if (!ciudad || !ci || !tel) {
-                    alert('Para "Envío al Interior" debes completar: Ciudad, Carnet de Identidad y Teléfono.');
-                    return;
-                }
 
                 infoInteriorTexto = 
 `🏢 *Ciudad Destino:* ${ciudad}
@@ -1739,11 +1777,10 @@ ${listado}
 🚚 *MÉTODO DE ENTREGA:*
 ▪️ *${metodoEntregaSeleccionado}*
 
-📍 *DATOS DEL CLIENTE:*
-👤 *Nombre:* ${nombre}
-🏠 *Dirección/Zona:* ${direccion}
+👤 *CLIENTE:*
+▪️ *Nombre:* ${nombre}
 ${infoInteriorTexto}
-¿Me confirman para coordinar el envío? Muchas gracias.`;
+¿Me confirman para coordinar la entrega? Muchas gracias.`;
 
             const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
