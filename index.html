@@ -48,7 +48,7 @@
         }
         .topbar a { color: white; text-decoration: none; font-weight: 600; margin-left: 15px; }
 
-        /* ================= CONTENEDOR FIJO STICKY (AMBAS BARRAS SIEMPRE ARRIBA) ================= */
+        /* CONTENEDOR FIJO STICKY */
         .sticky-header-container {
             position: sticky;
             top: 0;
@@ -116,7 +116,7 @@
             font-size: 1.1rem;
         }
 
-        /* BOTON CARRITO HEADER */
+        /* BOTON CARRITO */
         .header-actions { display: flex; align-items: center; gap: 12px; }
         .btn-header-cart {
             background: white;
@@ -143,7 +143,7 @@
             font-weight: 800;
         }
 
-        /* BARRA DE CATEGORÍAS (FIJA JUNTO AL HEADER) */
+        /* BARRA DE CATEGORÍAS */
         .nav-categories-bar {
             background: white;
             border-bottom: 1px solid var(--border);
@@ -258,11 +258,7 @@
             justify-content: center;
             overflow: hidden;
         }
-        .carousel-slide img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-        }
+        .carousel-slide img { width: 100%; height: 100%; object-fit: cover; }
         .carousel-arrow {
             position: absolute;
             top: 50%;
@@ -270,8 +266,7 @@
             background: rgba(255,255,255,0.9);
             color: var(--sunset-dark);
             border: none;
-            width: 44px;
-            height: 44px;
+            width: 44px; height: 44px;
             border-radius: 50%;
             font-size: 1.2rem;
             cursor: pointer;
@@ -295,18 +290,13 @@
             z-index: 10;
         }
         .dot {
-            width: 10px;
-            height: 10px;
+            width: 10px; height: 10px;
             border-radius: 50%;
             background: rgba(255,255,255,0.5);
             cursor: pointer;
             transition: 0.3s;
         }
-        .dot.active {
-            background: white;
-            width: 28px;
-            border-radius: 20px;
-        }
+        .dot.active { background: white; width: 28px; border-radius: 20px; }
 
         /* HEADER DE TÍTULO */
         .category-hero-header {
@@ -314,12 +304,7 @@
             margin: 25px auto 10px;
             padding: 0 20px;
         }
-        .category-hero-header h2 {
-            font-size: 2.2rem;
-            font-weight: 800;
-            color: var(--primary);
-            letter-spacing: -0.5px;
-        }
+        .category-hero-header h2 { font-size: 2.2rem; font-weight: 800; color: var(--primary); letter-spacing: -0.5px; }
 
         /* STORE CONTAINER */
         .store-container {
@@ -339,7 +324,7 @@
             padding: 24px;
             height: fit-content;
             position: sticky;
-            top: 140px; /* Ajustado para el header doble fijo */
+            top: 140px;
         }
         .sidebar-head {
             display: flex;
@@ -359,10 +344,7 @@
             cursor: pointer;
         }
 
-        .accordion-group {
-            border-bottom: 1px solid var(--border);
-            padding: 16px 0;
-        }
+        .accordion-group { border-bottom: 1px solid var(--border); padding: 16px 0; }
         .accordion-group:last-child { border-bottom: none; }
         .accordion-btn {
             width: 100%;
@@ -399,46 +381,16 @@
             user-select: none;
         }
         .filter-option:hover { background: var(--sunset-light); }
-        .filter-option.selected {
-            background: var(--sunset-light);
-            font-weight: 700;
-            color: var(--sunset-dark);
-        }
-        .filter-option input {
-            accent-color: var(--sunset-dark);
-            margin-right: 10px;
-            width: 16px;
-            height: 16px;
-            cursor: pointer;
-        }
+        .filter-option.selected { background: var(--sunset-light); font-weight: 700; color: var(--sunset-dark); }
+        .filter-option input { accent-color: var(--sunset-dark); margin-right: 10px; width: 16px; height: 16px; cursor: pointer; }
         .opt-label { display: flex; align-items: center; font-size: 0.92rem; flex: 1; }
-        .opt-count {
-            background: #f5f0ec;
-            color: var(--text-muted);
-            font-size: 0.75rem;
-            padding: 2px 8px;
-            border-radius: 50px;
-            font-weight: 700;
-        }
+        .opt-count { background: #f5f0ec; color: var(--text-muted); font-size: 0.75rem; padding: 2px 8px; border-radius: 50px; font-weight: 700; }
         .filter-option.selected .opt-count { background: var(--sunset-border); color: var(--sunset-dark); }
 
         .price-slider { width: 100%; accent-color: var(--sunset-dark); cursor: pointer; }
-        .price-range-labels {
-            display: flex;
-            justify-content: space-between;
-            font-size: 0.85rem;
-            font-weight: 700;
-            color: var(--text-muted);
-            margin-top: 6px;
-        }
+        .price-range-labels { display: flex; justify-content: space-between; font-size: 0.85rem; font-weight: 700; color: var(--text-muted); margin-top: 6px; }
 
-        .active-chips-bar {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-            flex-wrap: wrap;
-            margin-bottom: 20px;
-        }
+        .active-chips-bar { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; margin-bottom: 20px; }
         .chip {
             background: white;
             border: 1px solid var(--sunset-border);
@@ -456,11 +408,7 @@
         .chip i:hover { opacity: 1; }
 
         /* GRID PRODUCTOS */
-        .products-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
-            gap: 24px;
-        }
+        .products-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(245px, 1fr)); gap: 24px; }
 
         /* TARJETA PRODUCTO */
         .product-card {
@@ -473,31 +421,14 @@
             transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
             position: relative;
         }
-        .product-card:hover {
-            transform: translateY(-6px);
-            box-shadow: 0 16px 35px rgba(224, 56, 19, 0.1);
-            border-color: var(--sunset-border);
-        }
-        .card-img-wrap {
-            position: relative;
-            width: 100%;
-            height: 230px;
-            background: #faf8f6;
-            overflow: hidden;
-            cursor: pointer;
-        }
-        .card-img-wrap img {
-            width: 100%;
-            height: 100%;
-            object-fit: cover;
-            transition: transform 0.4s ease;
-        }
+        .product-card:hover { transform: translateY(-6px); box-shadow: 0 16px 35px rgba(224, 56, 19, 0.1); border-color: var(--sunset-border); }
+        .card-img-wrap { position: relative; width: 100%; height: 230px; background: #faf8f6; overflow: hidden; cursor: pointer; }
+        .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-card:hover .card-img-wrap img { transform: scale(1.06); }
 
         .badge-offer-tag {
             position: absolute;
-            top: 12px;
-            left: 12px;
+            top: 12px; left: 12px;
             background: #e03813;
             color: white;
             padding: 4px 10px;
@@ -508,8 +439,7 @@
         }
         .badge-brand-card {
             position: absolute;
-            top: 12px;
-            right: 12px;
+            top: 12px; right: 12px;
             background: rgba(255,255,255,0.92);
             color: var(--primary);
             padding: 3px 9px;
@@ -520,53 +450,15 @@
             border: 1px solid var(--border);
         }
 
-        .card-info {
-            padding: 18px;
-            display: flex;
-            flex-direction: column;
-            flex-grow: 1;
-        }
-        .card-meta {
-            font-size: 0.78rem;
-            color: var(--text-muted);
-            font-weight: 600;
-            text-transform: uppercase;
-            margin-bottom: 4px;
-        }
-        .card-title {
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: var(--primary);
-            margin-bottom: 12px;
-            line-height: 1.35;
-            cursor: pointer;
-        }
+        .card-info { padding: 18px; display: flex; flex-direction: column; flex-grow: 1; }
+        .card-meta { font-size: 0.78rem; color: var(--text-muted); font-weight: 600; text-transform: uppercase; margin-bottom: 4px; }
+        .card-title { font-size: 1.05rem; font-weight: 700; color: var(--primary); margin-bottom: 12px; line-height: 1.35; cursor: pointer; }
 
-        /* PRECIOS EXACTOS (PRECIO ANTERIOR TACHADO Y PRECIO OFERTA REAL) */
-        .card-price-box {
-            margin-top: auto;
-            margin-bottom: 15px;
-            display: flex;
-            align-items: baseline;
-            gap: 8px;
-        }
-        .card-price-box .price-old {
-            font-size: 1.15rem;
-            font-weight: 700;
-            color: #dc2626;
-            text-decoration: line-through;
-            opacity: 0.8;
-        }
-        .card-price-box .price-current {
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: #dc2626;
-        }
-        .card-price-box .price-normal {
-            font-size: 1.45rem;
-            font-weight: 800;
-            color: var(--primary);
-        }
+        /* PRECIOS */
+        .card-price-box { margin-top: auto; margin-bottom: 15px; display: flex; align-items: baseline; gap: 8px; }
+        .card-price-box .price-old { font-size: 1.15rem; font-weight: 700; color: #dc2626; text-decoration: line-through; opacity: 0.8; }
+        .card-price-box .price-current { font-size: 1.45rem; font-weight: 800; color: #dc2626; }
+        .card-price-box .price-normal { font-size: 1.45rem; font-weight: 800; color: var(--primary); }
 
         .btn-card-cart-full {
             background: var(--sunset-dark);
@@ -692,12 +584,7 @@
         .cart-item-brand { font-size: 0.74rem; color: var(--sunset-dark); font-weight: 700; }
         .cart-item-price { color: var(--price); font-weight: 800; font-size: 0.95rem; margin-top: 4px; }
         
-        .qty-box {
-            display: flex;
-            align-items: center;
-            gap: 8px;
-            margin-top: 6px;
-        }
+        .qty-box { display: flex; align-items: center; gap: 8px; margin-top: 6px; }
         .btn-q {
             background: var(--sunset-light);
             border: 1px solid var(--sunset-border);
@@ -784,7 +671,7 @@
         }
         .checkout-form input:focus { border-color: var(--sunset-dark); }
 
-        /* CAMPOS CONDICIONALES PARA INTERIOR */
+        /* CAMPOS INTERIOR */
         .interior-fields {
             display: none;
             flex-direction: column;
@@ -825,6 +712,75 @@
             background: var(--whatsapp-dark);
             transform: scale(1.02);
         }
+
+        /* ================= MODAL DE CONFIRMACIÓN DE PEDIDO Y HORARIOS ================= */
+        .order-confirm-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.65);
+            z-index: 2000;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(5px);
+        }
+        .order-confirm-overlay.open { display: flex; }
+        .order-confirm-card {
+            background: white;
+            border-radius: var(--radius-lg);
+            max-width: 480px;
+            width: 100%;
+            padding: 35px 30px;
+            text-align: center;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            animation: popIn 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+        }
+        .confirm-icon-box {
+            width: 70px; height: 70px;
+            background: #dcfce7;
+            color: #16a34a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.2rem;
+            margin: 0 auto 18px;
+        }
+        .order-confirm-card h3 { font-size: 1.45rem; font-weight: 800; color: var(--primary); margin-bottom: 8px; }
+        .confirm-main-msg { font-size: 1.05rem; font-weight: 700; color: var(--sunset-dark); margin-bottom: 15px; }
+        
+        .schedule-box {
+            background: #fff7ed;
+            border: 1px solid #ffedd5;
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            margin-bottom: 16px;
+            text-align: left;
+        }
+        .schedule-box h5 { color: #c2410c; font-size: 0.88rem; margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+        .schedule-box p { font-size: 0.84rem; color: #7c2d12; line-height: 1.4; }
+
+        .demand-note {
+            font-size: 0.86rem;
+            color: var(--text-muted);
+            line-height: 1.5;
+            margin-bottom: 22px;
+        }
+        .btn-confirm-accept {
+            background: var(--sunset-dark);
+            color: white;
+            border: none;
+            width: 100%;
+            padding: 13px;
+            border-radius: var(--radius-md);
+            font-size: 0.98rem;
+            font-weight: 700;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-confirm-accept:hover { background: #c52d0a; }
 
         .btn-wa-float {
             position: fixed;
@@ -886,18 +842,16 @@
     <!-- TOPBAR -->
     <div class="topbar-wrapper">
         <div class="topbar">
-            <span> <b>NovaShop Bolivia:</b> Entregas y envíos garantizados </span>
+            <span>✨ <b>NovaShop Bolivia:</b> Entregas garantizadas en La Paz y envíos a toda Bolivia 🇧🇴</span>
             <div>
-                <a href="#catalogo"><i class="fa-solid fa-truck-fast"></i> Envíos a capitales de Bolivia </a>
+                <a href="#catalogo"><i class="fa-solid fa-truck-fast"></i> Envíos Rápidos</a>
                 <a href="https://wa.me/59170000000" target="_blank"><i class="fa-brands fa-whatsapp"></i> Atención Directa</a>
             </div>
         </div>
     </div>
 
-    <!-- ================= CONTENEDOR FIJO STICKY (BUSCADOR + CATEGORÍAS FIJAS ARRIBA) ================= -->
+    <!-- CONTENEDOR FIJO STICKY (BUSCADOR + CATEGORÍAS FIJAS ARRIBA) -->
     <div class="sticky-header-container">
-        
-        <!-- MAIN HEADER -->
         <header class="main-header">
             <div class="header-inner">
                 <div class="logo-box" onclick="irAInicioOfertas()">
@@ -905,13 +859,11 @@
                     <span>Bolivia</span>
                 </div>
 
-                <!-- BUSCADOR -->
                 <div class="search-container">
                     <i class="fa-solid fa-magnifying-glass"></i>
                     <input type="text" id="searchInput" placeholder="Buscar productos, ofertas, marcas..." oninput="ejecutarFiltros()">
                 </div>
 
-                <!-- CARRITO -->
                 <div class="header-actions">
                     <button class="btn-header-cart" onclick="toggleCart()">
                         <i class="fa-solid fa-cart-shopping"></i>
@@ -922,11 +874,9 @@
             </div>
         </header>
 
-        <!-- MENÚ DE CATEGORÍAS -->
         <nav class="nav-categories-bar">
             <ul class="nav-categories-inner" id="navCategoryDropdowns"></ul>
         </nav>
-
     </div>
 
     <!-- CARRUSEL PROMOCIONAL -->
@@ -1022,9 +972,7 @@
                 </div>
                 <h2 id="modalTitle" style="font-size: 1.4rem; color: var(--primary); margin-bottom: 8px;"></h2>
                 <p id="modalSubcat" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;"></p>
-                <div id="modalPriceContainer" style="margin-bottom: 30px;">
-                    <!-- Se llena con precio y tachado si aplica -->
-                </div>
+                <div id="modalPriceContainer" style="margin-bottom: 30px;"></div>
                 <div style="margin-top: auto;">
                     <button class="btn-card-cart-full" id="modalBtnAddToCart" style="padding: 15px; border-radius: var(--radius-sm);">
                         <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
@@ -1094,6 +1042,30 @@
         </div>
     </div>
 
+    <!-- ================= MODAL EMERGENTE DE CONFIRMACIÓN ================= -->
+    <div class="order-confirm-overlay" id="orderConfirmModal">
+        <div class="order-confirm-card">
+            <div class="confirm-icon-box">
+                <i class="fa-brands fa-whatsapp"></i>
+            </div>
+            <h3>¡Pedido en Proceso!</h3>
+            <p class="confirm-main-msg">Tu pedido será tomado enseguida 🚀</p>
+
+            <div class="schedule-box">
+                <h5><i class="fa-regular fa-clock"></i> Horarios de Atención:</h5>
+                <p><b>Lunes a Viernes:</b><br>09:00 a 12:00 y de 14:00 a 18:00</p>
+            </div>
+
+            <p class="demand-note">
+                Si no contestamos enseguida es porque nos encontramos con alta demanda, pero espéranos un momento que enseguida te enviamos tu <b>código QR</b> para el pago o resolvemos cualquier duda. 🙌
+            </p>
+
+            <button class="btn-confirm-accept" onclick="cerrarModalConfirmacion()">
+                <i class="fa-solid fa-check"></i> Entendido, ¡muchas gracias!
+            </button>
+        </div>
+    </div>
+
     <!-- BOTÓN FLOTANTE WHATSAPP -->
     <a href="#" id="floatingWaBtn" target="_blank" class="btn-wa-float" title="Escríbenos a WhatsApp">
         <i class="fa-brands fa-whatsapp"></i>
@@ -1104,11 +1076,11 @@
         <div class="footer-inner">
             <div>
                 <h4>🏪 NovaShop Bolivia</h4>
-                <p>Tu tienda de confianza en La Paz con la mejor selección de productos de alta calidad y marcas originales con atención directa por WhatsApp.</p>
+                <p>Tu tienda de confianza en La Paz con la mejor selección en hogar, mecánica, outdoors, herramientas y marcas originales con atención directa por WhatsApp.</p>
             </div>
             <div>
                 <h4>📦 Envíos y Pagos</h4>
-                <p>• Entregas en Correos, Paqueteria en El Alto y Zona Sur<br>• Envíos a todas las ciudades capitales de Bolivia<br>• Coordinación 100% por WhatsApp</p>
+                <p>• Entregas en Correos, El Alto y Zona Sur<br>• Envíos nacionales a todos los departamentos<br>• Coordinación 100% por WhatsApp</p>
             </div>
             <div>
                 <h4>📲 Atención al Cliente</h4>
@@ -1147,17 +1119,15 @@
         let intervaloCarrusel = null;
         let carrito = JSON.parse(localStorage.getItem('novashop_sunset_cart')) || [];
 
-        // 🎯 FUNCIÓN PARA CALCULAR PRECIOS REALES (DESCUENTO Y TACHADO)
+        // 🎯 FUNCIÓN DE CÁLCULO DE PRECIOS EXACTOS
         function calcularPreciosProducto(prod) {
             const esOferta = (prod.en_oferta === true || prod.en_oferta === 'true' || prod.precio_oferta != null);
             
-            // Precio a cobrar: si tiene precio_oferta usa ese, sino usa precio normal
             let precioFinal = parseFloat(prod.precio || 0);
             let precioTachado = null;
 
             if (esOferta && prod.precio_oferta != null && parseFloat(prod.precio_oferta) > 0) {
                 precioFinal = parseFloat(prod.precio_oferta);
-                // El precio anterior a tachar es el precio_anterior o el precio regular
                 precioTachado = prod.precio_anterior ? parseFloat(prod.precio_anterior) : parseFloat(prod.precio);
             } else if (prod.precio_anterior && parseFloat(prod.precio_anterior) > precioFinal) {
                 precioTachado = parseFloat(prod.precio_anterior);
@@ -1519,7 +1489,6 @@
                 const { esOferta, precioFinal, precioTachado } = calcularPreciosProducto(prod);
                 const tagTexto = esOferta ? 'Mejor oferta' : (prod.subcategoria || prod.categoria || 'Novedad');
 
-                // Renderizado de precios limpio y exacto
                 let priceHtml = '';
                 if (precioTachado && precioTachado > precioFinal) {
                     priceHtml = `
@@ -1606,10 +1575,28 @@
             document.getElementById('quickViewModal').classList.remove('open');
         }
 
-        // 9. CARRITO Y VALIDACIONES EN TIEMPO REAL
+        // 9. CARRITO Y RESETEO DE FORMULARIO
         function toggleCart() {
             document.getElementById('cartDrawer').classList.toggle('open');
             document.getElementById('cartOverlay').classList.toggle('open');
+        }
+
+        // 👉 FUNCIÓN PARA LIMPIAR TODO EL FORMULARIO
+        function limpiarFormularioEntrega() {
+            metodoEntregaSeleccionado = '';
+            document.querySelectorAll('.delivery-card').forEach(card => {
+                card.classList.remove('active');
+                const radio = card.querySelector('input[type="radio"]');
+                if (radio) radio.checked = false;
+            });
+
+            document.getElementById('interiorFieldsContainer').classList.remove('show');
+            document.getElementById('orderCustName').value = '';
+            document.getElementById('custCity').value = '';
+            document.getElementById('custCI').value = '';
+            document.getElementById('custPhone').value = '';
+            
+            validarFormularioCarrito();
         }
 
         function seleccionarEntrega(metodo) {
@@ -1617,7 +1604,7 @@
             
             document.querySelectorAll('.delivery-card').forEach(card => {
                 const radio = card.querySelector('input[type="radio"]');
-                if (radio.value === metodo) {
+                if (radio && radio.value === metodo) {
                     radio.checked = true;
                     card.classList.add('active');
                 } else {
@@ -1638,22 +1625,26 @@
         function validarFormularioCarrito() {
             const btnWa = document.getElementById('btnConfirmarWhatsApp');
             
+            // 1. Debe haber items
             if (carrito.length === 0) {
                 deshabilitarBoton(btnWa);
                 return;
             }
 
+            // 2. Debe haber seleccionado método de entrega
             if (!metodoEntregaSeleccionado) {
                 deshabilitarBoton(btnWa);
                 return;
             }
 
+            // 3. Debe tener Nombre
             const nombre = document.getElementById('orderCustName').value.trim();
             if (!nombre) {
                 deshabilitarBoton(btnWa);
                 return;
             }
 
+            // 4. Si es Interior, validar campos extras
             if (metodoEntregaSeleccionado === 'Envío al Interior') {
                 const ciudad = document.getElementById('custCity').value.trim();
                 const ci = document.getElementById('custCI').value.trim();
@@ -1665,11 +1656,13 @@
                 }
             }
 
+            // ✅ Habilitar botón en verde
             btnWa.disabled = false;
             btnWa.classList.add('enabled');
         }
 
         function deshabilitarBoton(btn) {
+            if (!btn) return;
             btn.disabled = true;
             btn.classList.remove('enabled');
         }
@@ -1688,7 +1681,7 @@
                     id: prod.id,
                     nombre: prod.nombre,
                     marca: prod.marca || '',
-                    precio: precioFinal, // 👉 Cobra el precio con descuento real
+                    precio: precioFinal,
                     imagen_url: prod.imagen_url,
                     cantidad: 1
                 });
@@ -1738,7 +1731,7 @@
                         <p style="font-size: 0.85rem; margin-top: 5px;">¡Añade productos para iniciar tu compra!</p>
                     </div>`;
                 footer.classList.remove('show');
-                metodoEntregaSeleccionado = '';
+                limpiarFormularioEntrega(); // 👉 Limpia completamente el formulario si se queda vacío
                 return;
             }
 
@@ -1774,7 +1767,7 @@
             validarFormularioCarrito();
         }
 
-        // 10. FINALIZAR COMPRA A WHATSAPP
+        // 10. FINALIZAR COMPRA A WHATSAPP Y MOSTRAR CONFIRMACIÓN
         function finalizarPedidoWhatsApp() {
             if (carrito.length === 0 || !metodoEntregaSeleccionado) return;
 
@@ -1819,8 +1812,22 @@ ${listado}
 ${infoInteriorTexto}
 ¿Me confirman para coordinar la entrega? Muchas gracias.`;
 
+            // 1. Abrir WhatsApp
             const url = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(mensaje)}`;
             window.open(url, '_blank');
+
+            // 2. Limpiar carrito y cerrar drawer
+            carrito = [];
+            guardarCarrito();
+            actualizarCarritoUI();
+            toggleCart();
+
+            // 3. Mostrar modal con mensaje y horarios de atención
+            document.getElementById('orderConfirmModal').classList.add('open');
+        }
+
+        function cerrarModalConfirmacion() {
+            document.getElementById('orderConfirmModal').classList.remove('open');
         }
 
         // Iniciar
