@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NovaShop Bolivia | Tienda del Hogar & Variedades</title>
-    <!-- Google Fonts (Outfit: Redondeada y Elegante) & Font Awesome -->
+    <!-- Google Fonts (Outfit) & Font Awesome Icons -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
@@ -32,7 +32,7 @@
         * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
         body { background-color: var(--bg); color: var(--text); }
 
-        /* TOP HEADER ANUNCIO */
+        /* TOPBAR */
         .topbar-wrapper {
             background-color: var(--sunset-dark);
             color: #ffe6dc;
@@ -48,7 +48,7 @@
         }
         .topbar a { color: white; text-decoration: none; font-weight: 600; margin-left: 15px; }
 
-        /* HEADER PRINCIPAL SUNSET */
+        /* HEADER SUNSET */
         .main-header {
             background: var(--sunset-gradient);
             color: white;
@@ -73,11 +73,7 @@
             text-decoration: none;
             color: white;
         }
-        .logo-box h1 {
-            font-size: 1.8rem;
-            font-weight: 800;
-            letter-spacing: -0.5px;
-        }
+        .logo-box h1 { font-size: 1.8rem; font-weight: 800; letter-spacing: -0.5px; }
         .logo-box span {
             background: rgba(255,255,255,0.25);
             padding: 2px 8px;
@@ -87,7 +83,7 @@
             text-transform: uppercase;
         }
 
-        /* BUSCADOR ELEGANTE */
+        /* BUSCADOR */
         .search-container {
             flex: 1;
             max-width: 550px;
@@ -105,9 +101,7 @@
             transition: all 0.2s;
             color: var(--text);
         }
-        .search-container input:focus {
-            box-shadow: 0 4px 20px rgba(0,0,0,0.15);
-        }
+        .search-container input:focus { box-shadow: 0 4px 20px rgba(0,0,0,0.15); }
         .search-container i {
             position: absolute;
             left: 20px;
@@ -117,7 +111,7 @@
             font-size: 1.1rem;
         }
 
-        /* BOTONES ACCION HEADER */
+        /* BOTON CARRITO */
         .header-actions { display: flex; align-items: center; gap: 12px; }
         .btn-header-cart {
             background: white;
@@ -144,7 +138,7 @@
             font-weight: 800;
         }
 
-        /* MENÚ DE CATEGORÍAS CON DROPDOWNS (COMO WIX TRÉBOL) */
+        /* MENÚ DE CATEGORÍAS & OFERTAS */
         .nav-categories-bar {
             background: white;
             border-bottom: 1px solid var(--border);
@@ -158,11 +152,9 @@
             display: flex;
             align-items: center;
             list-style: none;
-            overflow-x: visible;
+            overflow-x: auto;
         }
-        .nav-item {
-            position: relative;
-        }
+        .nav-item { position: relative; }
         .nav-link-btn {
             background: none;
             border: none;
@@ -176,11 +168,19 @@
             gap: 6px;
             border-bottom: 3px solid transparent;
             transition: all 0.2s;
+            white-space: nowrap;
         }
         .nav-link-btn:hover, .nav-item.active .nav-link-btn {
             color: var(--sunset-dark);
             border-bottom-color: var(--sunset-dark);
             background: var(--sunset-light);
+        }
+        /* BOTÓN DESTACADO DE OFERTAS */
+        .btn-ofertas-nav {
+            color: #e03813 !important;
+            font-weight: 800 !important;
+            background: #fff0eb !important;
+            border-radius: 8px 8px 0 0;
         }
 
         /* DROPDOWN MENU */
@@ -225,7 +225,90 @@
             padding-left: 24px;
         }
 
-        /* TITULO DE SECCIÓN DINÁMICO */
+        /* ================= CARRUSEL PROMOCIONAL (SOLO EN INICIO / OFERTAS) ================= */
+        .carousel-section {
+            max-width: 1320px;
+            margin: 20px auto 0;
+            padding: 0 20px;
+            display: block; /* Se oculta con JS cuando filtras por otra categoría */
+        }
+        .carousel-container {
+            position: relative;
+            border-radius: var(--radius-lg);
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(224, 56, 19, 0.12);
+            background: #fff;
+            aspect-ratio: 16 / 5;
+            min-height: 200px;
+        }
+        .carousel-track {
+            display: flex;
+            height: 100%;
+            transition: transform 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+        }
+        .carousel-slide {
+            min-width: 100%;
+            height: 100%;
+            position: relative;
+            background: var(--sunset-gradient);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            overflow: hidden;
+        }
+        .carousel-slide img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+        }
+        /* Flechas del carrusel */
+        .carousel-arrow {
+            position: absolute;
+            top: 50%;
+            transform: translateY(-50%);
+            background: rgba(255,255,255,0.9);
+            color: var(--sunset-dark);
+            border: none;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            font-size: 1.2rem;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.15);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.2s;
+            z-index: 10;
+        }
+        .carousel-arrow:hover { background: white; transform: translateY(-50%) scale(1.1); }
+        .arrow-prev { left: 20px; }
+        .arrow-next { right: 20px; }
+        /* Indicadores / Puntos */
+        .carousel-dots {
+            position: absolute;
+            bottom: 15px;
+            left: 50%;
+            transform: translateX(-50%);
+            display: flex;
+            gap: 8px;
+            z-index: 10;
+        }
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.5);
+            cursor: pointer;
+            transition: 0.3s;
+        }
+        .dot.active {
+            background: white;
+            width: 28px;
+            border-radius: 20px;
+        }
+
+        /* HEADER DE SECCIÓN DINÁMICO */
         .category-hero-header {
             max-width: 1320px;
             margin: 25px auto 10px;
@@ -238,7 +321,7 @@
             letter-spacing: -0.5px;
         }
 
-        /* LAYOUT PRINCIPAL DE LA TIENDA */
+        /* LAYOUT TIENDA */
         .store-container {
             max-width: 1320px;
             margin: 20px auto 60px;
@@ -248,7 +331,7 @@
             gap: 35px;
         }
 
-        /* SIDEBAR DE FILTROS COLAPSABLES (ACORDEÓN) */
+        /* SIDEBAR DE FILTROS ACORDEÓN */
         .filter-sidebar {
             background: white;
             border-radius: var(--radius-md);
@@ -276,7 +359,6 @@
             cursor: pointer;
         }
 
-        /* GRUPO ACORDEÓN */
         .accordion-group {
             border-bottom: 1px solid var(--border);
             padding: 16px 0;
@@ -306,7 +388,6 @@
         }
         .accordion-content.hidden { display: none; }
 
-        /* CHECKBOXES & LIST ITEMS ELEGANTE */
         .filter-option {
             display: flex;
             align-items: center;
@@ -341,8 +422,7 @@
         }
         .filter-option.selected .opt-count { background: var(--sunset-border); color: var(--sunset-dark); }
 
-        /* SLIDER DE PRECIO */
-        .price-filter-box { padding: 10px 4px; }
+        /* SLIDER PRECIO */
         .price-slider { width: 100%; accent-color: var(--sunset-dark); cursor: pointer; }
         .price-range-labels {
             display: flex;
@@ -353,7 +433,7 @@
             margin-top: 6px;
         }
 
-        /* CHIPS DE FILTROS ACTIVOS */
+        /* CHIPS */
         .active-chips-bar {
             display: flex;
             align-items: center;
@@ -377,14 +457,14 @@
         .chip i { cursor: pointer; opacity: 0.7; }
         .chip i:hover { opacity: 1; }
 
-        /* GRID DE PRODUCTOS */
+        /* GRID PRODUCTOS */
         .products-grid {
             display: grid;
             grid-template-columns: repeat(auto-fill, minmax(245px, 1fr));
             gap: 24px;
         }
 
-        /* TARJETA DE PRODUCTO ESTILO WIX */
+        /* TARJETA PRODUCTO */
         .product-card {
             background: white;
             border: 1px solid var(--border);
@@ -416,20 +496,22 @@
         }
         .product-card:hover .card-img-wrap img { transform: scale(1.06); }
 
-        /* BADGES */
-        .badge-offer {
+        .badge-offer-tag {
             position: absolute;
             top: 12px;
             left: 12px;
-            background: var(--sunset-gradient);
+            background: linear-gradient(135deg, #ef4444 0%, #dc2626 100%);
             color: white;
             padding: 4px 10px;
             border-radius: 50px;
-            font-size: 0.72rem;
+            font-size: 0.75rem;
             font-weight: 800;
             text-transform: uppercase;
             letter-spacing: 0.5px;
-            box-shadow: 0 4px 10px rgba(224, 56, 19, 0.3);
+            box-shadow: 0 4px 10px rgba(220, 38, 38, 0.35);
+            display: flex;
+            align-items: center;
+            gap: 4px;
         }
         .badge-brand-card {
             position: absolute;
@@ -471,17 +553,18 @@
             margin-bottom: 15px;
             display: flex;
             align-items: baseline;
-            gap: 4px;
+            gap: 8px;
         }
         .card-price-box .num {
             font-size: 1.5rem;
             font-weight: 800;
             color: var(--price);
         }
-        .card-price-box .curr {
+        .card-price-box .old-price {
             font-size: 0.95rem;
-            font-weight: 700;
-            color: var(--price);
+            text-decoration: line-through;
+            color: #94a3b8;
+            font-weight: 600;
         }
 
         .card-buttons {
@@ -689,7 +772,6 @@
         }
         .btn-send-whatsapp:hover { background: var(--whatsapp-dark); transform: scale(1.02); }
 
-        /* BOTÓN FLOTANTE */
         .btn-wa-float {
             position: fixed;
             bottom: 25px;
@@ -734,13 +816,13 @@
             font-size: 0.85rem;
         }
 
-        /* RESPONSIVE */
         @media (max-width: 900px) {
             .store-container { grid-template-columns: 1fr; }
             .modal-card { grid-template-columns: 1fr; }
             .modal-img-box { min-height: 220px; }
             .topbar-wrapper { display: none; }
             .nav-categories-bar { overflow-x: auto; }
+            .carousel-container { aspect-ratio: 16 / 8; }
         }
     </style>
 </head>
@@ -757,10 +839,10 @@
         </div>
     </div>
 
-    <!-- MAIN HEADER SUNSET -->
+    <!-- MAIN HEADER -->
     <header class="main-header">
         <div class="header-inner">
-            <a href="#" class="logo-box">
+            <a href="#" class="logo-box" onclick="irAInicioOfertas()">
                 <h1>NovaShop</h1>
                 <span>Bolivia</span>
             </a>
@@ -768,7 +850,7 @@
             <!-- BUSCADOR -->
             <div class="search-container">
                 <i class="fa-solid fa-magnifying-glass"></i>
-                <input type="text" id="searchInput" placeholder="Buscar productos, herramientas, marcas..." oninput="ejecutarFiltros()">
+                <input type="text" id="searchInput" placeholder="Buscar productos, ofertas, marcas..." oninput="ejecutarFiltros()">
             </div>
 
             <!-- CARRITO -->
@@ -782,69 +864,75 @@
         </div>
     </header>
 
-    <!-- MENÚ HORIZONTAL DE CATEGORÍAS CON DROPDOWNS (ESTILO TRÉBOL / WIX) -->
+    <!-- MENÚ DE CATEGORÍAS (CON OFERTAS EN PRIMERA POSICIÓN) -->
     <nav class="nav-categories-bar">
         <ul class="nav-categories-inner" id="navCategoryDropdowns">
             <!-- Dinámico -->
         </ul>
     </nav>
 
-    <!-- TÍTULO HERO DE CATEGORÍA ACTIVA -->
+    <!-- ================= CARRUSEL PROMOCIONAL (SOLO EN INICIO / OFERTAS) ================= -->
+    <section class="carousel-section" id="promoCarouselSection">
+        <div class="carousel-container">
+            <div class="carousel-track" id="carouselTrack">
+                <!-- Se llena con las imágenes que pongas en la lista -->
+            </div>
+            <button class="carousel-arrow arrow-prev" onclick="moverCarrusel(-1)"><i class="fa-solid fa-chevron-left"></i></button>
+            <button class="carousel-arrow arrow-next" onclick="moverCarrusel(1)"><i class="fa-solid fa-chevron-right"></i></button>
+            <div class="carousel-dots" id="carouselDots"></div>
+        </div>
+    </section>
+
+    <!-- TÍTULO DINÁMICO -->
     <div class="category-hero-header" id="catalogo">
-        <h2 id="mainCategoryHeaderTitle">Catálogo General</h2>
+        <h2 id="mainCategoryHeaderTitle">🔥 Ofertas Destacadas</h2>
     </div>
 
-    <!-- CONTENEDOR PRINCIPAL -->
+    <!-- CONTENEDOR TIENDA -->
     <div class="store-container">
         
-        <!-- SIDEBAR DE FILTROS ACORDEÓN (INTERACTIVO: SELECCIONAR / DESELECCIONAR) -->
+        <!-- SIDEBAR DE FILTROS ACORDEÓN -->
         <aside class="filter-sidebar">
             <div class="sidebar-head">
                 <h3><i class="fa-solid fa-sliders"></i> Filtrar por</h3>
                 <button class="btn-clear-all" onclick="resetearTodosFiltros()">Limpiar todo</button>
             </div>
 
-            <!-- 1. ACORDEÓN CATEGORÍAS -->
+            <!-- ACORDEÓN CATEGORÍAS -->
             <div class="accordion-group">
                 <button class="accordion-btn" onclick="toggleAccordion('catContent', 'catIcon')">
                     <span>Categoría</span>
                     <i class="fa-solid fa-minus" id="catIcon"></i>
                 </button>
-                <div class="accordion-content" id="catContent">
-                    <!-- Dinámico -->
-                </div>
+                <div class="accordion-content" id="catContent"></div>
             </div>
 
-            <!-- 2. ACORDEÓN SUBCATEGORÍAS -->
+            <!-- ACORDEÓN SUBCATEGORÍAS -->
             <div class="accordion-group">
                 <button class="accordion-btn" onclick="toggleAccordion('subcatContent', 'subcatIcon')">
                     <span>Subcategoría</span>
                     <i class="fa-solid fa-minus" id="subcatIcon"></i>
                 </button>
-                <div class="accordion-content" id="subcatContent">
-                    <!-- Dinámico -->
-                </div>
+                <div class="accordion-content" id="subcatContent"></div>
             </div>
 
-            <!-- 3. ACORDEÓN MARCAS -->
+            <!-- ACORDEÓN MARCAS -->
             <div class="accordion-group">
                 <button class="accordion-btn" onclick="toggleAccordion('brandContent', 'brandIcon')">
                     <span>Marca</span>
                     <i class="fa-solid fa-minus" id="brandIcon"></i>
                 </button>
-                <div class="accordion-content" id="brandContent">
-                    <!-- Dinámico -->
-                </div>
+                <div class="accordion-content" id="brandContent"></div>
             </div>
 
-            <!-- 4. ACORDEÓN PRECIO -->
+            <!-- ACORDEÓN PRECIO -->
             <div class="accordion-group">
                 <button class="accordion-btn" onclick="toggleAccordion('priceContent', 'priceIcon')">
                     <span>Precio máximo</span>
                     <i class="fa-solid fa-minus" id="priceIcon"></i>
                 </button>
                 <div class="accordion-content" id="priceContent">
-                    <div class="price-filter-box">
+                    <div style="padding: 10px 4px;">
                         <input type="range" id="priceRangeInput" min="0" max="1000" step="10" value="1000" class="price-slider" oninput="cambiarPrecioMaximo(this.value)">
                         <div class="price-range-labels">
                             <span>0 Bs.</span>
@@ -856,14 +944,10 @@
 
         </aside>
 
-        <!-- CATÁLOGO DE PRODUCTOS -->
+        <!-- MAIN PRODUCTOS -->
         <main>
-            <!-- BARRA DE FILTROS ACTIVOS (CHIPS) -->
             <div class="active-chips-bar" id="activeChipsBar"></div>
-
-            <div class="products-grid" id="productsGridContainer">
-                <!-- Se llena dinámicamente -->
-            </div>
+            <div class="products-grid" id="productsGridContainer"></div>
         </main>
 
     </div>
@@ -878,7 +962,7 @@
             <div class="modal-details">
                 <div style="display: flex; gap: 8px; margin-bottom: 10px;">
                     <span id="modalBrandBadge" class="badge-brand-card" style="position: static;"></span>
-                    <span id="modalCatBadge" class="badge-offer" style="position: static; box-shadow: none;"></span>
+                    <span id="modalCatBadge" class="badge-offer-tag" style="position: static; box-shadow: none;"></span>
                 </div>
                 <h2 id="modalTitle" style="font-size: 1.4rem; color: var(--primary); margin-bottom: 8px;"></h2>
                 <p id="modalSubcat" style="color: var(--text-muted); font-size: 0.9rem; margin-bottom: 20px;"></p>
@@ -901,7 +985,7 @@
     <div class="cart-overlay" id="cartOverlay" onclick="toggleCart()"></div>
     <div class="cart-drawer" id="cartDrawer">
         <div class="cart-header">
-            <h3><i class="fa-solid fa-bag-shopping"></i> Tu Carrito de Compras</h3>
+            <h3><i class="fa-solid fa-bag-shopping"></i> Tu Carrito</h3>
             <button class="btn-close-cart" onclick="toggleCart()"><i class="fa-solid fa-xmark"></i></button>
         </div>
 
@@ -938,7 +1022,7 @@
             </div>
             <div>
                 <h4>📦 Envíos y Pagos</h4>
-                <p>• Entregas a domicilio en La Paz y El Alto<br>• Envíos nacionales a todos los departamentos<br>• Coordinación y seguimiento 100% por WhatsApp</p>
+                <p>• Entregas a domicilio en La Paz y El Alto<br>• Envíos nacionales a todos los departamentos<br>• Coordinación 100% por WhatsApp</p>
             </div>
             <div>
                 <h4>📲 Atención al Cliente</h4>
@@ -956,15 +1040,25 @@
         
         // 👉 REEMPLAZA CON TU NÚMERO DE WHATSAPP REAL (Ej: 59171234567 para Bolivia)
         const WHATSAPP_PHONE = '59170000000'; 
+
+        // 🖼️👇 AQUÍ PEGAS LAS FOTOS DE POSTIMAGES PARA TU CARRUSEL DE INICIO
+        const IMAGENES_CARRUSEL = [
+            "https://i.postimg.cc/L8zchZfW/modern-minimalist-children-s-playroom-with-toys-books-and-storage-free-photo.jpg", // Banner 1 (Ofertas)
+            "https://i.postimg.cc/XYknmP2Z/montaje-2.webp", // Banner 2 (Variedades)
+            "https://i.postimg.cc/rm3T52mp/trucos-para-limpiar-utensilios-de-acero-inoxidable-1.jpg"  // Banner 3 (Envíos)
+        ];
         // =================================================
 
         document.getElementById('floatingWaBtn').href = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent('Hola NovaShop Bolivia, tengo una consulta sobre los productos.')}`;
 
         let listaProductos = [];
-        let categoriaSeleccionada = 'todas';
+        // 👉 Por defecto iniciamos mostrando 'ofertas'
+        let categoriaSeleccionada = 'ofertas';
         let subcategoriaSeleccionada = 'todas';
         let marcaSeleccionada = 'todas';
         let precioMaximo = 1000;
+        let slideActual = 0;
+        let intervaloCarrusel = null;
         let carrito = JSON.parse(localStorage.getItem('novashop_sunset_cart')) || [];
 
         // 1. INICIALIZAR
@@ -984,6 +1078,7 @@
                     document.getElementById('priceDisplayLabel').textContent = `Hasta ${maxP} Bs.`;
                 }
 
+                iniciarCarrusel();
                 construirNavDropdowns();
                 construirFiltrosSidebar();
                 ejecutarFiltros();
@@ -998,9 +1093,59 @@
             }
         }
 
-        // 2. CONSTRUIR NAVBAR SUPERIOR CON DROPDOWNS TIPO TRÉBOL / WIX
+        // 2. LÓGICA DEL CARRUSEL
+        function iniciarCarrusel() {
+            const track = document.getElementById('carouselTrack');
+            const dots = document.getElementById('carouselDots');
+
+            track.innerHTML = IMAGENES_CARRUSEL.map(imgUrl => `
+                <div class="carousel-slide">
+                    <img src="${imgUrl}" alt="Oferta Promocional" loading="lazy">
+                </div>
+            `).join('');
+
+            dots.innerHTML = IMAGENES_CARRUSEL.map((_, i) => `
+                <div class="dot ${i === 0 ? 'active' : ''}" onclick="irASlide(${i})"></div>
+            `).join('');
+
+            // Auto-play cada 4.5 segundos
+            if (intervaloCarrusel) clearInterval(intervaloCarrusel);
+            intervaloCarrusel = setInterval(() => moverCarrusel(1), 4500);
+        }
+
+        function moverCarrusel(direccion) {
+            slideActual = (slideActual + direccion + IMAGENES_CARRUSEL.length) % IMAGENES_CARRUSEL.length;
+            actualizarCarrusel();
+        }
+
+        function irASlide(index) {
+            slideActual = index;
+            actualizarCarrusel();
+        }
+
+        function actualizarCarrusel() {
+            const track = document.getElementById('carouselTrack');
+            track.style.transform = `translateX(-${slideActual * 100}%)`;
+
+            document.querySelectorAll('.dot').forEach((d, i) => {
+                d.classList.toggle('active', i === slideActual);
+            });
+        }
+
+        function irAInicioOfertas() {
+            categoriaSeleccionada = 'ofertas';
+            subcategoriaSeleccionada = 'todas';
+            marcaSeleccionada = 'todas';
+            document.getElementById('searchInput').value = '';
+            construirNavDropdowns();
+            construirFiltrosSidebar();
+            ejecutarFiltros();
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+
+        // 3. NAVBAR SUPERIOR CON 'OFERTAS' DE PRIMERO
         function construirNavDropdowns() {
-            const catMap = {}; // { 'Hogar': Set('Cocina'), 'Mecanica': Set('Llaves') }
+            const catMap = {};
 
             listaProductos.forEach(p => {
                 const cat = p.categoria || 'Varios';
@@ -1010,6 +1155,14 @@
 
             const navBar = document.getElementById('navCategoryDropdowns');
             navBar.innerHTML = `
+                <!-- BOTÓN OFERTAS (PRIMERO EN LA LISTA) -->
+                <li class="nav-item ${categoriaSeleccionada === 'ofertas' ? 'active' : ''}">
+                    <button class="nav-link-btn btn-ofertas-nav" onclick="toggleCategoriaFiltro('ofertas')">
+                        <i class="fa-solid fa-fire"></i> Ofertas
+                    </button>
+                </li>
+
+                <!-- BOTÓN TODAS -->
                 <li class="nav-item ${categoriaSeleccionada === 'todas' ? 'active' : ''}">
                     <button class="nav-link-btn" onclick="toggleCategoriaFiltro('todas')">
                         <i class="fa-solid fa-border-all"></i> Todas
@@ -1055,9 +1208,8 @@
             }
         }
 
-        // 3. CONSTRUIR FILTROS INTERACTIVOS DEL SIDEBAR
+        // 4. SIDEBAR DE FILTROS ACORDEÓN
         function construirFiltrosSidebar() {
-            // Contadores
             const catCount = {};
             const subcatCount = {};
             const brandCount = {};
@@ -1074,7 +1226,7 @@
                 }
             });
 
-            // Llenar Categorías
+            // Categorías
             const catBox = document.getElementById('catContent');
             catBox.innerHTML = Object.entries(catCount).map(([cat, count]) => `
                 <div class="filter-option ${categoriaSeleccionada === cat ? 'selected' : ''}" onclick="toggleCategoriaFiltro('${cat}')">
@@ -1086,7 +1238,7 @@
                 </div>
             `).join('');
 
-            // Llenar Subcategorías
+            // Subcategorías
             const subBox = document.getElementById('subcatContent');
             if (Object.keys(subcatCount).length === 0) {
                 subBox.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted); padding: 5px;">Sin subcategorías</p>`;
@@ -1102,7 +1254,7 @@
                 `).join('');
             }
 
-            // Llenar Marcas
+            // Marcas
             const brandBox = document.getElementById('brandContent');
             if (Object.keys(brandCount).length === 0) {
                 brandBox.innerHTML = `<p style="font-size: 0.85rem; color: var(--text-muted); padding: 5px;">Sin marcas registradas</p>`;
@@ -1119,7 +1271,7 @@
             }
         }
 
-        // 4. ACCIONES DE SELECCIONAR / DESELECCIONAR FILTROS (TOGGLE)
+        // 5. ACCIONES DE FILTRO
         function toggleCategoriaFiltro(cat) {
             categoriaSeleccionada = (categoriaSeleccionada === cat) ? 'todas' : cat;
             construirNavDropdowns();
@@ -1169,12 +1321,30 @@
             ejecutarFiltros();
         }
 
-        // 5. EJECUTAR FILTROS Y RENDERIZAR
+        // 6. EJECUTAR FILTROS Y MOSTRAR / OCULTAR CARRUSEL
         function ejecutarFiltros() {
             const query = document.getElementById('searchInput').value.toLowerCase().trim();
 
+            // CONTROL DEL CARRUSEL: Solo se muestra si estamos en la vista 'ofertas' y sin búsquedas
+            const carouselSec = document.getElementById('promoCarouselSection');
+            if (categoriaSeleccionada === 'ofertas' && query === '' && subcategoriaSeleccionada === 'todas' && marcaSeleccionada === 'todas') {
+                carouselSec.style.display = 'block';
+            } else {
+                carouselSec.style.display = 'none';
+            }
+
             const filtrados = listaProductos.filter(p => {
-                const matchCat = (categoriaSeleccionada === 'todas') || (p.categoria === categoriaSeleccionada);
+                // Validación de Ofertas (si tiene en_oferta true o precio_oferta)
+                let matchCat = false;
+                if (categoriaSeleccionada === 'ofertas') {
+                    // Si p.en_oferta es true o si no hay ninguno marcado muestra todos los primeros
+                    matchCat = (p.en_oferta === true || p.en_oferta === 'true' || p.precio_oferta != null);
+                } else if (categoriaSeleccionada === 'todas') {
+                    matchCat = true;
+                } else {
+                    matchCat = (p.categoria === categoriaSeleccionada);
+                }
+
                 const matchSub = (subcategoriaSeleccionada === 'todas') || (p.subcategoria === subcategoriaSeleccionada);
                 const matchBrand = (marcaSeleccionada === 'todas') || (p.marca && p.marca.toLowerCase() === marcaSeleccionada.toLowerCase());
                 const matchPrice = (parseFloat(p.precio) || 0) <= precioMaximo;
@@ -1187,8 +1357,10 @@
                 return matchCat && matchSub && matchBrand && matchPrice && matchSearch;
             });
 
-            // Título dinámico
-            let headerTitle = categoriaSeleccionada === 'todas' ? 'Todos los Productos' : categoriaSeleccionada;
+            // Título
+            let headerTitle = '🔥 Ofertas Destacadas';
+            if (categoriaSeleccionada === 'todas') headerTitle = 'Todos los Productos';
+            else if (categoriaSeleccionada !== 'ofertas') headerTitle = categoriaSeleccionada;
             if (subcategoriaSeleccionada !== 'todas') headerTitle += ` ➔ ${subcategoriaSeleccionada}`;
             document.getElementById('mainCategoryHeaderTitle').textContent = headerTitle;
 
@@ -1200,7 +1372,7 @@
             const bar = document.getElementById('activeChipsBar');
             let chips = [];
 
-            if (categoriaSeleccionada !== 'todas') {
+            if (categoriaSeleccionada !== 'todas' && categoriaSeleccionada !== 'ofertas') {
                 chips.push(`<span class="chip">Categoría: ${categoriaSeleccionada} <i class="fa-solid fa-xmark" onclick="toggleCategoriaFiltro('${categoriaSeleccionada}')"></i></span>`);
             }
             if (subcategoriaSeleccionada !== 'todas') {
@@ -1216,12 +1388,23 @@
         function renderizarGrid(productos) {
             const grid = document.getElementById('productsGridContainer');
 
+            // Si estamos en ofertas y aún no marcaste ninguno en Supabase
+            if (productos.length === 0 && categoriaSeleccionada === 'ofertas') {
+                grid.innerHTML = `
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
+                        <i class="fa-solid fa-tags fa-3x" style="opacity: 0.3; margin-bottom: 15px;"></i>
+                        <h3 style="color: var(--primary);">Pronto añadiremos productos a esta sección</h3>
+                        <p style="margin-top: 6px;">Marca la columna "en_oferta" como true en Supabase para mostrarlos aquí.</p>
+                        <button class="btn-card-cart" style="margin: 15px auto 0; display: inline-flex;" onclick="toggleCategoriaFiltro('todas')">Ver Todo el Catálogo</button>
+                    </div>`;
+                return;
+            }
+
             if (productos.length === 0) {
                 grid.innerHTML = `
-                    <div style="grid-column: 1/-1; text-align: center; padding: 70px 20px; color: var(--text-muted);">
+                    <div style="grid-column: 1/-1; text-align: center; padding: 60px 20px; color: var(--text-muted);">
                         <i class="fa-solid fa-box-open fa-3x" style="opacity: 0.3; margin-bottom: 15px;"></i>
-                        <h3 style="color: var(--primary);">No se encontraron productos con estos filtros</h3>
-                        <p style="margin-top: 6px;">Prueba desmarcando alguna marca o ajustando el precio.</p>
+                        <h3 style="color: var(--primary);">No hay productos con estos filtros</h3>
                         <button class="btn-card-cart" style="margin: 15px auto 0; display: inline-flex;" onclick="resetearTodosFiltros()">Limpiar Filtros</button>
                     </div>`;
                 return;
@@ -1229,6 +1412,8 @@
 
             grid.innerHTML = productos.map(prod => {
                 const foto = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
+                const esOferta = (prod.en_oferta === true || prod.en_oferta === 'true');
+                const tagTexto = esOferta ? '🔥 OFERTA' : (prod.subcategoria || prod.categoria || 'Novedad');
                 const msgWa = `Hola! Quiero pedir 1 unidad de: ${prod.nombre} ${prod.marca ? '('+prod.marca+')' : ''} - Precio: ${prod.precio} Bs.`;
                 const linkDirectoWa = `https://wa.me/${WHATSAPP_PHONE}?text=${encodeURIComponent(msgWa)}`;
 
@@ -1236,7 +1421,7 @@
                     <div class="product-card">
                         <div class="card-img-wrap" onclick="abrirModal(${prod.id})">
                             <img src="${foto}" alt="${prod.nombre}" loading="lazy">
-                            <span class="badge-offer">${prod.subcategoria || prod.categoria || 'Novedad'}</span>
+                            <span class="badge-offer-tag">${tagTexto}</span>
                             ${prod.marca ? `<span class="badge-brand-card">${prod.marca}</span>` : ''}
                         </div>
                         <div class="card-info">
@@ -1244,8 +1429,8 @@
                             <h3 class="card-title" onclick="abrirModal(${prod.id})">${prod.nombre}</h3>
                             
                             <div class="card-price-box">
-                                <span class="num">${prod.precio}</span>
-                                <span class="curr">Bs.</span>
+                                <span class="num">${prod.precio} Bs.</span>
+                                ${prod.precio_anterior ? `<span class="old-price">${prod.precio_anterior} Bs.</span>` : ''}
                             </div>
 
                             <div class="card-buttons">
@@ -1262,7 +1447,7 @@
             }).join('');
         }
 
-        // 6. TOGGLE ACORDEÓN
+        // 7. TOGGLE ACORDEÓN
         function toggleAccordion(contentId, iconId) {
             const content = document.getElementById(contentId);
             const icon = document.getElementById(iconId);
@@ -1275,7 +1460,7 @@
             }
         }
 
-        // 7. MODAL VISTA RÁPIDA
+        // 8. MODAL VISTA RÁPIDA
         function abrirModal(id) {
             const prod = listaProductos.find(p => p.id === id);
             if (!prod) return;
@@ -1283,7 +1468,7 @@
             document.getElementById('modalImg').src = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
             document.getElementById('modalTitle').textContent = prod.nombre;
             document.getElementById('modalBrandBadge').textContent = prod.marca ? `Marca: ${prod.marca}` : 'Original';
-            document.getElementById('modalCatBadge').textContent = prod.categoria || 'Tienda';
+            document.getElementById('modalCatBadge').textContent = (prod.en_oferta === true || prod.en_oferta === 'true') ? '🔥 OFERTA' : (prod.categoria || 'Tienda');
             document.getElementById('modalSubcat').textContent = prod.subcategoria ? `Sección: ${prod.subcategoria}` : '';
             document.getElementById('modalPrice').textContent = prod.precio;
 
@@ -1302,7 +1487,7 @@
             document.getElementById('quickViewModal').classList.remove('open');
         }
 
-        // 8. CARRITO DE COMPRAS
+        // 9. CARRITO DE COMPRAS
         function toggleCart() {
             document.getElementById('cartDrawer').classList.toggle('open');
             document.getElementById('cartOverlay').classList.toggle('open');
@@ -1400,7 +1585,7 @@
             document.getElementById('cartTotalSum').textContent = `${sumaTotal.toFixed(2)} Bs.`;
         }
 
-        // 9. FINALIZAR COMPRA A WHATSAPP
+        // 10. FINALIZAR COMPRA A WHATSAPP
         function finalizarPedidoWhatsApp() {
             if (carrito.length === 0) {
                 alert('Tu carrito está vacío.');
