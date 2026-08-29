@@ -24,18 +24,16 @@
     </header>
 
     <div class="contenedor">
-        <!-- Aquí es donde la magia de JavaScript dibujará tus productos de Supabase -->
         <div id="vitrina" class="grid-productos">
             <p>Cargando tus hermosos productos...</p>
         </div>
     </div>
 
     <script>
-        // Este pequeño código JavaScript va a tu servidor local a traer los datos reales
         async function cargarProductos() {
             try {
-                // Llamamos a tu servidor que creamos en el paso anterior
-                const respuesta = await fetch('https://onrender.com');
+                // 👇 AQUÍ ESTÁ LA URL COMPLETA DE TU SERVIDOR EN RENDER
+                const respuesta = await fetch('https://novashop-backend-wbsj.onrender.com/api/productos');
                 const productos = await respuesta.json();
                 
                 const vitrina = document.getElementById('vitrina');
@@ -43,15 +41,12 @@
 
                 // Recorremos cada producto que trajimos de Supabase
                 productos.forEach(prod => {
-                    // Creamos el enlace inteligente de WhatsApp con tu número
-                    // NOTA: Aquí pondremos tu número de celular real en el siguiente paso
                     const mensajeWa = `Hola! Me interesa comprar el producto: ${prod.nombre}`;
-                    const linkWhatsapp = `https://wa.me{encodeURIComponent(mensajeWa)}`;
+                    // Pon tu número con código de país (ejemplo: 59170000000 para Bolivia)
+                    const linkWhatsapp = `https://wa.me/591XXXXXXXX?text=${encodeURIComponent(mensajeWa)}`;
 
-                    // Usamos una imagen de muestra de internet si no tiene foto en la base de datos
-                    const fotoUrl = prod.imagen_url || 'https://unsplash.com';
+                    const fotoUrl = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
 
-                    // Dibujamos la tarjeta del producto en la pantalla
                     vitrina.innerHTML += `
                         <div class="tarjeta">
                             <img src="${fotoUrl}" alt="${prod.nombre}">
