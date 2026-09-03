@@ -237,6 +237,275 @@
             .product-admin-row.header-row { display: none; }
             .p-price, .p-stock, .row-actions { grid-column: 2 / 3; }
         }
+
+        /* ================= MODAL DE EDICIÓN ================= */
+        .edit-modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.6);
+            z-index: 1500;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            padding: 20px;
+            backdrop-filter: blur(3px);
+        }
+        .edit-modal-overlay.open { display: flex; }
+        .edit-modal-card {
+            background: white;
+            border-radius: var(--radius-md);
+            max-width: 620px;
+            width: 100%;
+            max-height: 90vh;
+            overflow-y: auto;
+            padding: 26px 28px;
+            position: relative;
+            box-shadow: 0 25px 50px rgba(0,0,0,0.3);
+        }
+        .edit-modal-card h2 {
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 4px;
+        }
+        .edit-modal-card .edit-sub {
+            font-size: 0.82rem;
+            color: var(--text-muted);
+            margin-bottom: 18px;
+        }
+        .edit-modal-close {
+            position: absolute;
+            top: 18px; right: 18px;
+            background: #f5f0ec;
+            border: none;
+            width: 34px; height: 34px;
+            border-radius: 50%;
+            cursor: pointer;
+            font-size: 1rem;
+        }
+        .edit-modal-close:hover { background: #e5ded8; }
+
+        .edit-preview-img {
+            width: 100%;
+            max-height: 160px;
+            object-fit: contain;
+            background: #faf8f6;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            margin-bottom: 14px;
+        }
+
+        #editProductForm {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+        }
+        #editProductForm label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px; }
+        #editProductForm input, #editProductForm textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        #editProductForm input:focus, #editProductForm textarea:focus { border-color: var(--sunset-dark); }
+
+        .edit-actions {
+            display: flex;
+            gap: 10px;
+            margin-top: 18px;
+        }
+        .btn-save-edit {
+            background: var(--sunset-dark);
+            color: white;
+            border: none;
+            padding: 12px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            flex: 1;
+        }
+        .btn-save-edit:hover { background: #c52d0a; }
+        .btn-cancel-edit {
+            background: #f5f0ec;
+            color: var(--primary);
+            border: none;
+            padding: 12px 22px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-cancel-edit:hover { background: #e5ded8; }
+
+        /* ================= SECCIONES COLEGABLES ================= */
+        .collapsible-content { display: none; margin-top: 8px; }
+        .collapsible-content.show { display: block; }
+
+        /* ================= BUSCADOR INVENTARIO ================= */
+        .search-box {
+            position: relative;
+            margin-bottom: 16px;
+        }
+        .search-box input {
+            width: 100%;
+            padding: 11px 14px 11px 40px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.92rem;
+            outline: none;
+        }
+        .search-box input:focus { border-color: var(--sunset-dark); }
+        .search-box i {
+            position: absolute;
+            left: 14px; top: 50%;
+            transform: translateY(-50%);
+            color: var(--text-muted);
+        }
+
+        /* ================= CATEGORÍAS ================= */
+        .add-cat-row {
+            display: flex;
+            gap: 8px;
+            margin-bottom: 18px;
+        }
+        .add-cat-row input {
+            flex: 1;
+            padding: 10px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        .add-cat-row input:focus { border-color: var(--sunset-dark); }
+        .btn-add-cat {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 10px 18px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-add-cat:hover { background: #128a3e; }
+
+        .cat-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 14px; }
+        .cat-card {
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            padding: 14px;
+            background: #fdfaf8;
+        }
+        .cat-card-head {
+            display: flex;
+            gap: 6px;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+        .cat-card-head input {
+            flex: 1;
+            padding: 8px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-weight: 700;
+            font-size: 0.92rem;
+            color: var(--primary);
+        }
+        .cat-icon-btn {
+            border: none;
+            background: white;
+            border: 1px solid var(--border);
+            width: 32px; height: 32px;
+            border-radius: 8px;
+            cursor: pointer;
+            font-size: 0.82rem;
+            flex-shrink: 0;
+        }
+        .cat-icon-btn.save { color: var(--green); }
+        .cat-icon-btn.save:hover { background: #dcfce7; }
+        .cat-icon-btn.del { color: var(--red); }
+        .cat-icon-btn.del:hover { background: #fee2e2; }
+
+        .subcat-chip-list { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 10px; }
+        .subcat-chip {
+            background: white;
+            border: 1px solid var(--sunset-border);
+            color: var(--sunset-dark);
+            padding: 4px 10px;
+            border-radius: 50px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+        }
+        .subcat-chip i { cursor: pointer; opacity: 0.7; font-size: 0.7rem; }
+        .subcat-chip i:hover { opacity: 1; }
+        .no-subcats { font-size: 0.8rem; color: var(--text-muted); }
+
+        .add-subcat-row { display: flex; gap: 6px; }
+        .add-subcat-row input {
+            flex: 1;
+            padding: 7px 10px;
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            font-size: 0.82rem;
+        }
+        .btn-add-subcat {
+            background: var(--sunset-light);
+            color: var(--sunset-dark);
+            border: 1px solid var(--sunset-border);
+            padding: 6px 10px;
+            border-radius: 8px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-add-subcat:hover { background: var(--sunset-border); }
+
+        /* select con la misma pinta que los input */
+        select.select-like {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            outline: none;
+            background: white;
+        }
+        select.select-like:focus { border-color: var(--sunset-dark); }
+
+        /* ================= HISTORIAL DE VENTAS ================= */
+        .btn-refresh-ventas {
+            background: #f5f0ec;
+            color: var(--primary);
+            border: none;
+            padding: 8px 16px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.82rem;
+            cursor: pointer;
+            margin-bottom: 12px;
+        }
+        .btn-refresh-ventas:hover { background: #e5ded8; }
+        .venta-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr 100px;
+            gap: 10px;
+            padding: 10px 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.86rem;
+        }
+        .venta-row.header-row {
+            font-weight: 800;
+            color: var(--text-muted);
+            font-size: 0.74rem;
+            text-transform: uppercase;
+        }
+        .venta-cantidad { font-weight: 800; color: var(--sunset-dark); }
     </style>
 </head>
 <body>
@@ -266,13 +535,36 @@
 
         <div class="admin-body">
 
+            <!-- CATEGORÍAS Y SUBCATEGORÍAS -->
+            <div class="panel">
+                <h2 onclick="toggleSection('categoriasContent')"><i class="fa-solid fa-sitemap"></i> Categorías y Subcategorías <i class="fa-solid fa-chevron-down" style="margin-left:auto; font-size:0.8rem;"></i></h2>
+                <div id="categoriasContent" class="collapsible-content">
+                    <p style="font-size:0.85rem; color:var(--text-muted); margin-bottom:14px;">
+                        Acá creás las secciones (categorías) y sub-secciones (subcategorías) que después vas a elegir al cargar un producto. No hace falta tocar el código.
+                    </p>
+
+                    <div class="add-cat-row">
+                        <input type="text" id="newCatName" placeholder="Nombre de la nueva categoría (ej: Ferretería)">
+                        <button class="btn-add-cat" onclick="crearCategoria()"><i class="fa-solid fa-plus"></i> Crear categoría</button>
+                    </div>
+
+                    <div class="cat-grid" id="categoriasListContainer"></div>
+                </div>
+            </div>
+
             <!-- AGREGAR PRODUCTO -->
             <div class="panel">
                 <h2 onclick="toggleForm()"><i class="fa-solid fa-plus"></i> Agregar producto nuevo <i class="fa-solid fa-chevron-down" style="margin-left:auto; font-size:0.8rem;"></i></h2>
                 <div id="newProductForm">
                     <div><label>Nombre *</label><input type="text" id="np_nombre"></div>
-                    <div><label>Categoría *</label><input type="text" id="np_categoria" placeholder="Hogar, Outdoor, Salud..."></div>
-                    <div><label>Subcategoría</label><input type="text" id="np_subcategoria"></div>
+                    <div>
+                        <label>Categoría *</label>
+                        <select id="np_categoria" class="select-like" onchange="poblarSelectSubcategoria(this.value, 'np_subcategoria')"></select>
+                    </div>
+                    <div>
+                        <label>Subcategoría</label>
+                        <select id="np_subcategoria" class="select-like"></select>
+                    </div>
                     <div><label>Marca</label><input type="text" id="np_marca"></div>
                     <div><label>Precio *</label><input type="number" id="np_precio" step="0.01"></div>
                     <div><label>Precio de oferta</label><input type="number" id="np_precio_oferta" step="0.01"></div>
@@ -289,6 +581,12 @@
             <!-- LISTA DE PRODUCTOS -->
             <div class="panel">
                 <h2><i class="fa-solid fa-boxes-stacked"></i> Inventario</h2>
+
+                <div class="search-box">
+                    <i class="fa-solid fa-magnifying-glass"></i>
+                    <input type="text" id="adminSearchInput" placeholder="Buscar por nombre, marca o categoría..." oninput="filtrarInventario()">
+                </div>
+
                 <div class="product-admin-row header-row">
                     <span></span>
                     <span>Producto</span>
@@ -300,6 +598,83 @@
                 <div id="productListContainer"></div>
             </div>
 
+            <!-- HISTORIAL DE VENTAS -->
+            <div class="panel">
+                <h2 onclick="toggleSection('ventasContent')"><i class="fa-solid fa-clock-rotate-left"></i> Historial de Ventas <i class="fa-solid fa-chevron-down" style="margin-left:auto; font-size:0.8rem;"></i></h2>
+                <div id="ventasContent" class="collapsible-content">
+                    <button class="btn-refresh-ventas" onclick="cargarVentas()"><i class="fa-solid fa-rotate"></i> Actualizar</button>
+                    <div class="venta-row header-row">
+                        <span>Fecha</span>
+                        <span>Producto</span>
+                        <span>Cantidad</span>
+                    </div>
+                    <div id="ventasListContainer"></div>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <!-- ========== MODAL DE EDICIÓN DE PRODUCTO ========== -->
+    <div class="edit-modal-overlay" id="editModalOverlay">
+        <div class="edit-modal-card">
+            <button class="edit-modal-close" onclick="cerrarModalEdicion()"><i class="fa-solid fa-xmark"></i></button>
+            <h2><i class="fa-solid fa-pen"></i> Editar producto</h2>
+            <p class="edit-sub" id="editSubTitle"></p>
+
+            <img id="ep_preview" class="edit-preview-img" src="" alt="Vista previa">
+
+            <div id="editProductForm">
+                <input type="hidden" id="ep_id">
+
+                <div class="full-span" style="grid-column: 1 / -1;">
+                    <label>Nombre *</label>
+                    <input type="text" id="ep_nombre">
+                </div>
+
+                <div>
+                    <label>Categoría *</label>
+                    <select id="ep_categoria" class="select-like" onchange="poblarSelectSubcategoria(this.value, 'ep_subcategoria')"></select>
+                </div>
+                <div>
+                    <label>Subcategoría</label>
+                    <select id="ep_subcategoria" class="select-like"></select>
+                </div>
+                <div><label>Marca</label><input type="text" id="ep_marca"></div>
+                <div><label>Stock *</label><input type="number" id="ep_stock"></div>
+
+                <div><label>Precio normal *</label><input type="number" id="ep_precio" step="0.01"></div>
+                <div><label>Precio de oferta</label><input type="number" id="ep_precio_oferta" step="0.01"></div>
+                <div class="full-span" style="grid-column: 1 / -1;">
+                    <label>Precio anterior (el que sale tachado)</label>
+                    <input type="number" id="ep_precio_anterior" step="0.01">
+                </div>
+
+                <div class="checkbox-field" style="grid-column: 1 / -1; margin-top: 0;">
+                    <input type="checkbox" id="ep_en_oferta">
+                    <label style="margin:0;">Este producto está en oferta</label>
+                </div>
+
+                <div class="full-span" style="grid-column: 1 / -1;">
+                    <label>URL de imagen principal (link de Drive, Postimages, etc.)</label>
+                    <input type="text" id="ep_imagen_url" placeholder="https://..." oninput="actualizarPreviewEdicion()">
+                </div>
+
+                <div class="full-span" style="grid-column: 1 / -1;">
+                    <label>Galería de fotos/videos extra (varios links separados por coma)</label>
+                    <input type="text" id="ep_galeria" placeholder="https://foto1.jpg, https://foto2.jpg">
+                </div>
+
+                <div class="full-span" style="grid-column: 1 / -1;">
+                    <label>Descripción</label>
+                    <textarea id="ep_descripcion" rows="3"></textarea>
+                </div>
+            </div>
+
+            <div class="edit-actions">
+                <button class="btn-cancel-edit" onclick="cerrarModalEdicion()">Cancelar</button>
+                <button class="btn-save-edit" onclick="guardarEdicionProducto()"><i class="fa-solid fa-floppy-disk"></i> Guardar cambios</button>
+            </div>
         </div>
     </div>
 
@@ -316,6 +691,8 @@
 
         const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
         let listaProductosAdmin = [];
+        let listaCategoriasAdmin = [];
+        let listaVentasAdmin = [];
         let sesionActual = null;
 
         // ================= AUTENTICACIÓN =================
@@ -369,7 +746,14 @@
             document.getElementById('loginScreen').style.display = 'none';
             document.getElementById('adminDashboard').style.display = 'block';
             document.getElementById('userEmailLabel').textContent = sesionActual.user.email;
+            cargarCategorias();
             cargarProductos();
+            cargarVentas();
+        }
+
+        // Interruptor genérico para mostrar/ocultar secciones colapsables
+        function toggleSection(contentId) {
+            document.getElementById(contentId).classList.toggle('show');
         }
 
         // Devuelve headers con el token actual (renovando sesión si hace falta)
@@ -393,14 +777,21 @@
             }
         }
 
-        function renderizarListaAdmin() {
+        function renderizarListaAdmin(productosAMostrar) {
+            const lista = productosAMostrar || listaProductosAdmin;
             const cont = document.getElementById('productListContainer');
+
             if (!listaProductosAdmin.length) {
                 cont.innerHTML = `<div class="empty-msg">Todavía no hay productos cargados.</div>`;
                 return;
             }
 
-            cont.innerHTML = listaProductosAdmin.map(p => {
+            if (!lista.length) {
+                cont.innerHTML = `<div class="empty-msg">No se encontró ningún producto con esa búsqueda.</div>`;
+                return;
+            }
+
+            cont.innerHTML = lista.map(p => {
                 const stock = p.stock ?? 0;
                 let stockClass = 'stock-ok';
                 if (stock === 0) stockClass = 'stock-zero';
@@ -459,26 +850,88 @@
             }
         }
 
-        // ================= EDITAR PRODUCTO =================
-        async function editarProducto(id) {
+        // ================= EDITAR PRODUCTO (modal completo) =================
+        function editarProducto(id) {
             const prod = listaProductosAdmin.find(p => p.id === id);
             if (!prod) return;
 
-            const nuevoPrecio = prompt('Nuevo precio (Bs.):', prod.precio);
-            if (nuevoPrecio === null) return;
+            document.getElementById('ep_id').value = prod.id;
+            document.getElementById('editSubTitle').textContent = `Estás editando: ${prod.nombre}`;
 
-            const nuevoStock = prompt('Nuevo stock:', prod.stock ?? 0);
-            if (nuevoStock === null) return;
+            document.getElementById('ep_nombre').value = prod.nombre || '';
+            poblarSelectCategoria('ep_categoria', prod.categoria || '');
+            poblarSelectSubcategoria(prod.categoria || '', 'ep_subcategoria', prod.subcategoria || '');
+            document.getElementById('ep_marca').value = prod.marca || '';
+            document.getElementById('ep_stock').value = prod.stock ?? 0;
+
+            document.getElementById('ep_precio').value = prod.precio ?? '';
+            document.getElementById('ep_precio_oferta').value = prod.precio_oferta ?? '';
+            document.getElementById('ep_precio_anterior').value = prod.precio_anterior ?? '';
+
+            const enOferta = (prod.en_oferta === true || prod.en_oferta === 'true');
+            document.getElementById('ep_en_oferta').checked = enOferta;
+
+            document.getElementById('ep_imagen_url').value = prod.imagen_url || '';
+            document.getElementById('ep_galeria').value = prod.galeria || '';
+            document.getElementById('ep_descripcion').value = prod.descripcion || '';
+
+            actualizarPreviewEdicion();
+            document.getElementById('editModalOverlay').classList.add('open');
+        }
+
+        // Actualiza la miniatura de vista previa mientras escribes el link de la foto
+        function actualizarPreviewEdicion() {
+            const url = document.getElementById('ep_imagen_url').value.trim();
+            const img = document.getElementById('ep_preview');
+            if (url) {
+                img.src = url;
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
+        }
+
+        function cerrarModalEdicion() {
+            document.getElementById('editModalOverlay').classList.remove('open');
+        }
+
+        async function guardarEdicionProducto() {
+            const id = parseInt(document.getElementById('ep_id').value, 10);
+
+            const nombre = document.getElementById('ep_nombre').value.trim();
+            const categoria = document.getElementById('ep_categoria').value.trim();
+            const precio = parseFloat(document.getElementById('ep_precio').value);
+            const stock = parseInt(document.getElementById('ep_stock').value, 10);
+
+            if (!nombre || !categoria || isNaN(precio) || isNaN(stock)) {
+                mostrarToast('Completa al menos nombre, categoría, precio y stock');
+                return;
+            }
+
+            const precioOfertaVal = document.getElementById('ep_precio_oferta').value;
+            const precioAnteriorVal = document.getElementById('ep_precio_anterior').value;
+
+            const datosActualizados = {
+                nombre,
+                categoria,
+                subcategoria: document.getElementById('ep_subcategoria').value.trim() || null,
+                marca: document.getElementById('ep_marca').value.trim() || null,
+                precio,
+                precio_oferta: precioOfertaVal !== '' ? parseFloat(precioOfertaVal) : null,
+                precio_anterior: precioAnteriorVal !== '' ? parseFloat(precioAnteriorVal) : null,
+                en_oferta: document.getElementById('ep_en_oferta').checked,
+                stock,
+                imagen_url: document.getElementById('ep_imagen_url').value.trim() || null,
+                galeria: document.getElementById('ep_galeria').value.trim() || null,
+                descripcion: document.getElementById('ep_descripcion').value.trim() || null
+            };
 
             try {
                 const headers = await headersAutenticados();
                 const res = await fetch(`${BACKEND_URL}/${id}`, {
                     method: 'PUT',
                     headers,
-                    body: JSON.stringify({
-                        precio: parseFloat(nuevoPrecio),
-                        stock: parseInt(nuevoStock, 10)
-                    })
+                    body: JSON.stringify(datosActualizados)
                 });
                 if (!res.ok) throw new Error((await res.json()).error);
 
@@ -487,7 +940,8 @@
                 if (idx !== -1) listaProductosAdmin[idx] = actualizado;
 
                 renderizarListaAdmin();
-                mostrarToast('Producto actualizado');
+                cerrarModalEdicion();
+                mostrarToast('Producto actualizado correctamente');
             } catch (err) {
                 mostrarToast('Error: ' + err.message);
             }
@@ -563,6 +1017,290 @@
             } catch (err) {
                 mostrarToast('Error: ' + err.message);
             }
+        }
+
+        // ================= BUSCADOR DE INVENTARIO =================
+        function filtrarInventario() {
+            const query = document.getElementById('adminSearchInput').value.toLowerCase().trim();
+
+            if (!query) {
+                renderizarListaAdmin();
+                return;
+            }
+
+            const filtrados = listaProductosAdmin.filter(p =>
+                (p.nombre && p.nombre.toLowerCase().includes(query)) ||
+                (p.marca && p.marca.toLowerCase().includes(query)) ||
+                (p.categoria && p.categoria.toLowerCase().includes(query)) ||
+                (p.subcategoria && p.subcategoria.toLowerCase().includes(query))
+            );
+
+            renderizarListaAdmin(filtrados);
+        }
+
+        // ================= CATEGORÍAS Y SUBCATEGORÍAS =================
+        async function cargarCategorias() {
+            try {
+                const res = await fetch(BACKEND_URL.replace('/productos', '/categorias'));
+                listaCategoriasAdmin = await res.json();
+                renderizarPanelCategorias();
+                poblarSelectCategoria('np_categoria');
+                poblarSelectCategoria('ep_categoria');
+            } catch (err) {
+                mostrarToast('Error al cargar las categorías');
+            }
+        }
+
+        function obtenerSubcatsComoArray(categoria) {
+            if (!categoria || !categoria.subcategorias) return [];
+            return categoria.subcategorias.split(',').map(s => s.trim()).filter(Boolean);
+        }
+
+        function renderizarPanelCategorias() {
+            const cont = document.getElementById('categoriasListContainer');
+
+            if (!listaCategoriasAdmin.length) {
+                cont.innerHTML = `<p class="no-subcats">Todavía no creaste ninguna categoría. Usa el campo de arriba para crear la primera.</p>`;
+                return;
+            }
+
+            cont.innerHTML = listaCategoriasAdmin.map(cat => {
+                const subcats = obtenerSubcatsComoArray(cat);
+                const chipsHtml = subcats.length
+                    ? subcats.map(sub => `
+                        <span class="subcat-chip">
+                            ${sub}
+                            <i class="fa-solid fa-xmark" onclick="eliminarSubcategoria(${cat.id}, '${sub.replace(/'/g, "\\'")}')"></i>
+                        </span>
+                    `).join('')
+                    : `<span class="no-subcats">Sin subcategorías todavía</span>`;
+
+                return `
+                    <div class="cat-card">
+                        <div class="cat-card-head">
+                            <input type="text" id="catname_${cat.id}" value="${cat.nombre}">
+                            <button class="cat-icon-btn save" title="Guardar nombre" onclick="guardarNombreCategoria(${cat.id})"><i class="fa-solid fa-floppy-disk"></i></button>
+                            <button class="cat-icon-btn del" title="Eliminar categoría" onclick="eliminarCategoria(${cat.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                        <div class="subcat-chip-list">${chipsHtml}</div>
+                        <div class="add-subcat-row">
+                            <input type="text" id="newsub_${cat.id}" placeholder="Nueva subcategoría...">
+                            <button class="btn-add-subcat" onclick="agregarSubcategoria(${cat.id})"><i class="fa-solid fa-plus"></i> Agregar</button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        async function crearCategoria() {
+            const nombre = document.getElementById('newCatName').value.trim();
+            if (!nombre) {
+                mostrarToast('Escribe un nombre para la categoría');
+                return;
+            }
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(BACKEND_URL.replace('/productos', '/categorias'), {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ nombre, subcategorias: '' })
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const creada = await res.json();
+                listaCategoriasAdmin.push(creada);
+                renderizarPanelCategorias();
+                poblarSelectCategoria('np_categoria');
+                poblarSelectCategoria('ep_categoria');
+                document.getElementById('newCatName').value = '';
+                mostrarToast('Categoría creada');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        async function guardarNombreCategoria(id) {
+            const nuevoNombre = document.getElementById(`catname_${id}`).value.trim();
+            if (!nuevoNombre) {
+                mostrarToast('El nombre no puede quedar vacío');
+                return;
+            }
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL.replace('/productos', '/categorias')}/${id}`, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify({ nombre: nuevoNombre })
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const actualizada = await res.json();
+                const idx = listaCategoriasAdmin.findIndex(c => c.id === id);
+                if (idx !== -1) listaCategoriasAdmin[idx] = actualizada;
+
+                poblarSelectCategoria('np_categoria');
+                poblarSelectCategoria('ep_categoria');
+                mostrarToast('Categoría renombrada');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        async function eliminarCategoria(id) {
+            if (!confirm('¿Eliminar esta categoría y todas sus subcategorías? Los productos que ya la usan no se van a borrar, solo van a dejar de aparecer en el menú.')) return;
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL.replace('/productos', '/categorias')}/${id}`, { method: 'DELETE', headers });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                listaCategoriasAdmin = listaCategoriasAdmin.filter(c => c.id !== id);
+                renderizarPanelCategorias();
+                poblarSelectCategoria('np_categoria');
+                poblarSelectCategoria('ep_categoria');
+                mostrarToast('Categoría eliminada');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        async function agregarSubcategoria(catId) {
+            const input = document.getElementById(`newsub_${catId}`);
+            const nueva = input.value.trim();
+            if (!nueva) return;
+
+            const cat = listaCategoriasAdmin.find(c => c.id === catId);
+            if (!cat) return;
+
+            const actuales = obtenerSubcatsComoArray(cat);
+            if (actuales.some(s => s.toLowerCase() === nueva.toLowerCase())) {
+                mostrarToast('Esa subcategoría ya existe');
+                return;
+            }
+            actuales.push(nueva);
+            const nuevaLista = actuales.join(', ');
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL.replace('/productos', '/categorias')}/${catId}`, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify({ subcategorias: nuevaLista })
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const actualizada = await res.json();
+                const idx = listaCategoriasAdmin.findIndex(c => c.id === catId);
+                if (idx !== -1) listaCategoriasAdmin[idx] = actualizada;
+
+                input.value = '';
+                renderizarPanelCategorias();
+                mostrarToast('Subcategoría agregada');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        async function eliminarSubcategoria(catId, nombreSub) {
+            const cat = listaCategoriasAdmin.find(c => c.id === catId);
+            if (!cat) return;
+
+            const actuales = obtenerSubcatsComoArray(cat).filter(s => s !== nombreSub);
+            const nuevaLista = actuales.join(', ');
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL.replace('/productos', '/categorias')}/${catId}`, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify({ subcategorias: nuevaLista })
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const actualizada = await res.json();
+                const idx = listaCategoriasAdmin.findIndex(c => c.id === catId);
+                if (idx !== -1) listaCategoriasAdmin[idx] = actualizada;
+
+                renderizarPanelCategorias();
+                mostrarToast('Subcategoría eliminada');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        // Llena un <select> de categorías. Si se pasa un valor actual, lo deja seleccionado.
+        function poblarSelectCategoria(selectId, valorActual) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            if (!listaCategoriasAdmin.length) {
+                select.innerHTML = `<option value="">-- Crea una categoría arriba primero --</option>`;
+                return;
+            }
+
+            select.innerHTML = `<option value="">-- Selecciona categoría --</option>` +
+                listaCategoriasAdmin.map(c => `<option value="${c.nombre}">${c.nombre}</option>`).join('');
+
+            if (valorActual) {
+                select.value = valorActual;
+            }
+        }
+
+        // Llena el <select> de subcategorías según la categoría elegida
+        function poblarSelectSubcategoria(nombreCategoria, selectId, valorActual) {
+            const select = document.getElementById(selectId);
+            if (!select) return;
+
+            const cat = listaCategoriasAdmin.find(c => c.nombre === nombreCategoria);
+            const subcats = cat ? obtenerSubcatsComoArray(cat) : [];
+
+            if (!subcats.length) {
+                select.innerHTML = `<option value="">-- Sin subcategorías --</option>`;
+                return;
+            }
+
+            select.innerHTML = `<option value="">-- Selecciona subcategoría --</option>` +
+                subcats.map(s => `<option value="${s}">${s}</option>`).join('');
+
+            if (valorActual) {
+                select.value = valorActual;
+            }
+        }
+
+        // ================= HISTORIAL DE VENTAS =================
+        async function cargarVentas() {
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(BACKEND_URL.replace('/productos', '/ventas'), { headers });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                listaVentasAdmin = await res.json();
+                renderizarVentas();
+            } catch (err) {
+                mostrarToast('Error al cargar el historial de ventas');
+            }
+        }
+
+        function renderizarVentas() {
+            const cont = document.getElementById('ventasListContainer');
+
+            if (!listaVentasAdmin.length) {
+                cont.innerHTML = `<div class="empty-msg">Todavía no registraste ninguna venta.</div>`;
+                return;
+            }
+
+            cont.innerHTML = listaVentasAdmin.map(v => {
+                const fecha = new Date(v.fecha).toLocaleString('es-BO', { dateStyle: 'medium', timeStyle: 'short' });
+                return `
+                    <div class="venta-row">
+                        <span>${fecha}</span>
+                        <span>${v.producto_nombre || '(producto eliminado)'}</span>
+                        <span class="venta-cantidad">-${v.cantidad} unid.</span>
+                    </div>
+                `;
+            }).join('');
         }
 
         // ================= TOAST =================
