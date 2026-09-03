@@ -1,0 +1,586 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Administrador | NovaShop Bolivia</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+
+    <style>
+        :root {
+            --sunset-gradient: linear-gradient(135deg, #ff4e27 0%, #ff733b 50%, #ff9642 100%);
+            --sunset-dark: #e03813;
+            --sunset-light: #fff2ed;
+            --sunset-border: #ffd5c4;
+            --primary: #2d1810;
+            --bg: #fcfbfa;
+            --surface: #ffffff;
+            --border: #ede8e4;
+            --text: #2c2725;
+            --text-muted: #786f6a;
+            --green: #16a34a;
+            --red: #dc2626;
+            --radius-sm: 10px;
+            --radius-md: 16px;
+        }
+        * { box-sizing: border-box; margin: 0; padding: 0; font-family: 'Outfit', sans-serif; }
+        body { background: var(--bg); color: var(--text); min-height: 100vh; }
+
+        /* LOGIN */
+        .login-wrap {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: var(--sunset-gradient);
+            padding: 20px;
+        }
+        .login-card {
+            background: white;
+            border-radius: var(--radius-md);
+            padding: 36px 32px;
+            width: 100%;
+            max-width: 380px;
+            box-shadow: 0 20px 40px rgba(0,0,0,0.2);
+            text-align: center;
+        }
+        .login-card i.fa-lock { font-size: 2.2rem; color: var(--sunset-dark); margin-bottom: 10px; }
+        .login-card h1 { font-size: 1.4rem; font-weight: 800; color: var(--primary); margin-bottom: 4px; }
+        .login-card p.sub { font-size: 0.85rem; color: var(--text-muted); margin-bottom: 22px; }
+        .login-card input {
+            width: 100%;
+            padding: 12px 14px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.95rem;
+            margin-bottom: 12px;
+            outline: none;
+        }
+        .login-card input:focus { border-color: var(--sunset-dark); }
+        .btn-login {
+            width: 100%;
+            padding: 13px;
+            background: var(--sunset-dark);
+            color: white;
+            border: none;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.98rem;
+            cursor: pointer;
+            transition: 0.2s;
+        }
+        .btn-login:hover { background: #c52d0a; }
+        .btn-login:disabled { opacity: 0.6; cursor: not-allowed; }
+        .login-error {
+            color: var(--red);
+            font-size: 0.85rem;
+            font-weight: 600;
+            margin-top: 12px;
+            min-height: 18px;
+        }
+
+        /* DASHBOARD */
+        .admin-header {
+            background: var(--sunset-gradient);
+            color: white;
+            padding: 18px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        .admin-header h1 { font-size: 1.4rem; font-weight: 800; }
+        .admin-header .user-email { font-size: 0.82rem; opacity: 0.9; }
+        .btn-logout {
+            background: rgba(255,255,255,0.2);
+            color: white;
+            border: none;
+            padding: 8px 16px;
+            border-radius: 50px;
+            font-weight: 700;
+            font-size: 0.85rem;
+            cursor: pointer;
+        }
+        .btn-logout:hover { background: rgba(255,255,255,0.32); }
+
+        .admin-body { max-width: 1200px; margin: 0 auto; padding: 24px; }
+
+        .panel {
+            background: white;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-md);
+            padding: 20px;
+            margin-bottom: 24px;
+        }
+        .panel h2 {
+            font-size: 1.15rem;
+            font-weight: 800;
+            color: var(--primary);
+            margin-bottom: 16px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+        }
+
+        /* FORM AGREGAR PRODUCTO */
+        #newProductForm {
+            display: none;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 12px;
+            margin-top: 8px;
+        }
+        #newProductForm.show { display: grid; }
+        #newProductForm label { font-size: 0.78rem; font-weight: 700; color: var(--text-muted); display: block; margin-bottom: 4px; }
+        #newProductForm input, #newProductForm textarea {
+            width: 100%;
+            padding: 10px 12px;
+            border: 1px solid var(--border);
+            border-radius: var(--radius-sm);
+            font-size: 0.9rem;
+            outline: none;
+        }
+        #newProductForm input:focus, #newProductForm textarea:focus { border-color: var(--sunset-dark); }
+        .checkbox-field { display: flex; align-items: center; gap: 8px; margin-top: 22px; }
+        .checkbox-field input { width: auto; }
+        .full-span { grid-column: 1 / -1; }
+        .btn-save-new {
+            background: var(--green);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            cursor: pointer;
+        }
+        .btn-save-new:hover { background: #128a3e; }
+
+        /* TABLA DE PRODUCTOS */
+        .product-admin-row {
+            display: grid;
+            grid-template-columns: 60px 1.6fr 0.9fr 0.9fr 1fr 1.4fr;
+            gap: 12px;
+            align-items: center;
+            padding: 12px 8px;
+            border-bottom: 1px solid var(--border);
+            font-size: 0.88rem;
+        }
+        .product-admin-row.header-row {
+            font-weight: 800;
+            color: var(--text-muted);
+            font-size: 0.75rem;
+            text-transform: uppercase;
+        }
+        .product-admin-row img { width: 48px; height: 48px; object-fit: cover; border-radius: 8px; }
+        .p-name { font-weight: 700; color: var(--primary); }
+        .p-meta { color: var(--text-muted); font-size: 0.78rem; }
+        .stock-badge {
+            display: inline-block;
+            padding: 3px 10px;
+            border-radius: 50px;
+            font-weight: 800;
+            font-size: 0.82rem;
+        }
+        .stock-ok { background: #dcfce7; color: var(--green); }
+        .stock-low { background: #fef9c3; color: #ca8a04; }
+        .stock-zero { background: #fee2e2; color: var(--red); }
+
+        .row-actions { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+        .row-actions input[type="number"] {
+            width: 55px;
+            padding: 6px 8px;
+            border: 1px solid var(--border);
+            border-radius: 6px;
+            font-size: 0.85rem;
+        }
+        .btn-mini {
+            border: none;
+            padding: 7px 10px;
+            border-radius: 6px;
+            font-size: 0.78rem;
+            font-weight: 700;
+            cursor: pointer;
+            white-space: nowrap;
+        }
+        .btn-vender { background: var(--sunset-dark); color: white; }
+        .btn-vender:hover { background: #c52d0a; }
+        .btn-editar { background: #f5f0ec; color: var(--primary); }
+        .btn-editar:hover { background: #e5ded8; }
+        .btn-eliminar { background: #fee2e2; color: var(--red); }
+        .btn-eliminar:hover { background: #fecaca; }
+
+        .empty-msg { text-align: center; padding: 40px; color: var(--text-muted); }
+        .toast {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            background: var(--primary);
+            color: white;
+            padding: 12px 20px;
+            border-radius: var(--radius-sm);
+            font-weight: 700;
+            font-size: 0.88rem;
+            box-shadow: 0 8px 20px rgba(0,0,0,0.2);
+            z-index: 999;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: 0.25s;
+            pointer-events: none;
+        }
+        .toast.show { opacity: 1; transform: translateY(0); }
+
+        @media (max-width: 800px) {
+            .product-admin-row { grid-template-columns: 50px 1fr; }
+            .product-admin-row.header-row { display: none; }
+            .p-price, .p-stock, .row-actions { grid-column: 2 / 3; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ========== PANTALLA DE LOGIN ========== -->
+    <div class="login-wrap" id="loginScreen">
+        <div class="login-card">
+            <i class="fa-solid fa-lock"></i>
+            <h1>Panel de Administrador</h1>
+            <p class="sub">NovaShop Bolivia</p>
+            <input type="email" id="loginEmail" placeholder="Correo electrónico" autocomplete="username">
+            <input type="password" id="loginPassword" placeholder="Contraseña" autocomplete="current-password">
+            <button class="btn-login" id="btnLogin" onclick="iniciarSesion()">Ingresar</button>
+            <div class="login-error" id="loginErrorMsg"></div>
+        </div>
+    </div>
+
+    <!-- ========== DASHBOARD ========== -->
+    <div id="adminDashboard" style="display:none;">
+        <div class="admin-header">
+            <h1><i class="fa-solid fa-store"></i> Panel de Administrador</h1>
+            <div style="display:flex; align-items:center; gap:14px;">
+                <span class="user-email" id="userEmailLabel"></span>
+                <button class="btn-logout" onclick="cerrarSesion()"><i class="fa-solid fa-right-from-bracket"></i> Salir</button>
+            </div>
+        </div>
+
+        <div class="admin-body">
+
+            <!-- AGREGAR PRODUCTO -->
+            <div class="panel">
+                <h2 onclick="toggleForm()"><i class="fa-solid fa-plus"></i> Agregar producto nuevo <i class="fa-solid fa-chevron-down" style="margin-left:auto; font-size:0.8rem;"></i></h2>
+                <div id="newProductForm">
+                    <div><label>Nombre *</label><input type="text" id="np_nombre"></div>
+                    <div><label>Categoría *</label><input type="text" id="np_categoria" placeholder="Hogar, Outdoor, Salud..."></div>
+                    <div><label>Subcategoría</label><input type="text" id="np_subcategoria"></div>
+                    <div><label>Marca</label><input type="text" id="np_marca"></div>
+                    <div><label>Precio *</label><input type="number" id="np_precio" step="0.01"></div>
+                    <div><label>Precio de oferta</label><input type="number" id="np_precio_oferta" step="0.01"></div>
+                    <div><label>Precio anterior (tachado)</label><input type="number" id="np_precio_anterior" step="0.01"></div>
+                    <div><label>Stock inicial *</label><input type="number" id="np_stock" value="1"></div>
+                    <div class="checkbox-field"><input type="checkbox" id="np_en_oferta"><label style="margin:0;">Marcar como oferta</label></div>
+                    <div class="full-span"><label>URL de imagen principal</label><input type="text" id="np_imagen_url" placeholder="https://..."></div>
+                    <div class="full-span"><label>Galería (URLs separadas por coma)</label><input type="text" id="np_galeria" placeholder="https://foto1.jpg, https://foto2.jpg"></div>
+                    <div class="full-span"><label>Descripción</label><textarea id="np_descripcion" rows="3"></textarea></div>
+                    <div class="full-span"><button class="btn-save-new" onclick="crearProducto()"><i class="fa-solid fa-floppy-disk"></i> Guardar producto</button></div>
+                </div>
+            </div>
+
+            <!-- LISTA DE PRODUCTOS -->
+            <div class="panel">
+                <h2><i class="fa-solid fa-boxes-stacked"></i> Inventario</h2>
+                <div class="product-admin-row header-row">
+                    <span></span>
+                    <span>Producto</span>
+                    <span>Categoría</span>
+                    <span>Precio</span>
+                    <span>Stock</span>
+                    <span>Acciones</span>
+                </div>
+                <div id="productListContainer"></div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="toast" id="toastMsg"></div>
+
+    <script>
+        // ================= CONFIGURACIÓN =================
+        // 👉 Usa los MISMOS valores que ya tienes configurados como
+        // SUPABASE_URL y SUPABASE_ANON_KEY en tu backend de Render.
+        const SUPABASE_URL = 'https://hrxlliwtmtllydkeadmg.supabase.co';
+        const SUPABASE_ANON_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImhyeGxsaXd0bXRsbHlka2VhZG1nIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc5Mzg1ODEsImV4cCI6MjEwMzUxNDU4MX0.7H0CXdb8Ueja1V3yH0gP9lwuwq_045WJrBB-xdY48vQ';
+        const BACKEND_URL = 'https://novashop-backend-wbaj.onrender.com/api/productos';
+        // =================================================
+
+        const supabaseClient = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        let listaProductosAdmin = [];
+        let sesionActual = null;
+
+        // ================= AUTENTICACIÓN =================
+        async function verificarSesionInicial() {
+            const { data } = await supabaseClient.auth.getSession();
+            if (data.session) {
+                sesionActual = data.session;
+                mostrarDashboard();
+            }
+        }
+
+        async function iniciarSesion() {
+            const email = document.getElementById('loginEmail').value.trim();
+            const password = document.getElementById('loginPassword').value;
+            const errorMsg = document.getElementById('loginErrorMsg');
+            const btn = document.getElementById('btnLogin');
+
+            errorMsg.textContent = '';
+            if (!email || !password) {
+                errorMsg.textContent = 'Completa tu correo y contraseña.';
+                return;
+            }
+
+            btn.disabled = true;
+            btn.textContent = 'Ingresando...';
+
+            const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+
+            btn.disabled = false;
+            btn.textContent = 'Ingresar';
+
+            if (error) {
+                errorMsg.textContent = 'Correo o contraseña incorrectos.';
+                return;
+            }
+
+            sesionActual = data.session;
+            mostrarDashboard();
+        }
+
+        async function cerrarSesion() {
+            await supabaseClient.auth.signOut();
+            sesionActual = null;
+            document.getElementById('adminDashboard').style.display = 'none';
+            document.getElementById('loginScreen').style.display = 'flex';
+            document.getElementById('loginEmail').value = '';
+            document.getElementById('loginPassword').value = '';
+        }
+
+        function mostrarDashboard() {
+            document.getElementById('loginScreen').style.display = 'none';
+            document.getElementById('adminDashboard').style.display = 'block';
+            document.getElementById('userEmailLabel').textContent = sesionActual.user.email;
+            cargarProductos();
+        }
+
+        // Devuelve headers con el token actual (renovando sesión si hace falta)
+        async function headersAutenticados() {
+            const { data } = await supabaseClient.auth.getSession();
+            sesionActual = data.session;
+            return {
+                'Content-Type': 'application/json',
+                'Authorization': `Bearer ${sesionActual.access_token}`
+            };
+        }
+
+        // ================= CARGAR PRODUCTOS =================
+        async function cargarProductos() {
+            try {
+                const res = await fetch(BACKEND_URL);
+                listaProductosAdmin = await res.json();
+                renderizarListaAdmin();
+            } catch (err) {
+                mostrarToast('Error al cargar los productos');
+            }
+        }
+
+        function renderizarListaAdmin() {
+            const cont = document.getElementById('productListContainer');
+            if (!listaProductosAdmin.length) {
+                cont.innerHTML = `<div class="empty-msg">Todavía no hay productos cargados.</div>`;
+                return;
+            }
+
+            cont.innerHTML = listaProductosAdmin.map(p => {
+                const stock = p.stock ?? 0;
+                let stockClass = 'stock-ok';
+                if (stock === 0) stockClass = 'stock-zero';
+                else if (stock <= 3) stockClass = 'stock-low';
+
+                const foto = p.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=100';
+
+                return `
+                    <div class="product-admin-row">
+                        <img src="${foto}" alt="${p.nombre}">
+                        <div>
+                            <div class="p-name">${p.nombre}</div>
+                            <div class="p-meta">${p.marca || ''}</div>
+                        </div>
+                        <div class="p-meta">${p.categoria || '-'}${p.subcategoria ? ' • ' + p.subcategoria : ''}</div>
+                        <div>${p.precio_oferta ? p.precio_oferta : p.precio} Bs.</div>
+                        <div><span class="stock-badge ${stockClass}">${stock} unid.</span></div>
+                        <div class="row-actions">
+                            <input type="number" min="1" value="1" id="cant_${p.id}" title="Cantidad vendida">
+                            <button class="btn-mini btn-vender" onclick="marcarVenta(${p.id})"><i class="fa-solid fa-tag"></i> Vendido</button>
+                            <button class="btn-mini btn-editar" onclick="editarProducto(${p.id})"><i class="fa-solid fa-pen"></i></button>
+                            <button class="btn-mini btn-eliminar" onclick="eliminarProducto(${p.id})"><i class="fa-solid fa-trash"></i></button>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        // ================= VENDER (restar stock) =================
+        async function marcarVenta(id) {
+            const cantidadInput = document.getElementById(`cant_${id}`);
+            const cantidad = parseInt(cantidadInput.value, 10);
+
+            if (!cantidad || cantidad <= 0) {
+                mostrarToast('Ingresa una cantidad válida');
+                return;
+            }
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL}/${id}/vender`, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify({ cantidad })
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const actualizado = await res.json();
+                const idx = listaProductosAdmin.findIndex(p => p.id === id);
+                if (idx !== -1) listaProductosAdmin[idx] = actualizado;
+
+                renderizarListaAdmin();
+                mostrarToast(`Venta registrada: -${cantidad} unidad(es)`);
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        // ================= EDITAR PRODUCTO =================
+        async function editarProducto(id) {
+            const prod = listaProductosAdmin.find(p => p.id === id);
+            if (!prod) return;
+
+            const nuevoPrecio = prompt('Nuevo precio (Bs.):', prod.precio);
+            if (nuevoPrecio === null) return;
+
+            const nuevoStock = prompt('Nuevo stock:', prod.stock ?? 0);
+            if (nuevoStock === null) return;
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL}/${id}`, {
+                    method: 'PUT',
+                    headers,
+                    body: JSON.stringify({
+                        precio: parseFloat(nuevoPrecio),
+                        stock: parseInt(nuevoStock, 10)
+                    })
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const actualizado = await res.json();
+                const idx = listaProductosAdmin.findIndex(p => p.id === id);
+                if (idx !== -1) listaProductosAdmin[idx] = actualizado;
+
+                renderizarListaAdmin();
+                mostrarToast('Producto actualizado');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        // ================= ELIMINAR PRODUCTO =================
+        async function eliminarProducto(id) {
+            if (!confirm('¿Seguro que quieres eliminar este producto?')) return;
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(`${BACKEND_URL}/${id}`, { method: 'DELETE', headers });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                listaProductosAdmin = listaProductosAdmin.filter(p => p.id !== id);
+                renderizarListaAdmin();
+                mostrarToast('Producto eliminado');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        // ================= CREAR PRODUCTO NUEVO =================
+        function toggleForm() {
+            document.getElementById('newProductForm').classList.toggle('show');
+        }
+
+        async function crearProducto() {
+            const nombre = document.getElementById('np_nombre').value.trim();
+            const categoria = document.getElementById('np_categoria').value.trim();
+            const precio = parseFloat(document.getElementById('np_precio').value);
+            const stock = parseInt(document.getElementById('np_stock').value, 10);
+
+            if (!nombre || !categoria || !precio || isNaN(stock)) {
+                mostrarToast('Completa al menos nombre, categoría, precio y stock');
+                return;
+            }
+
+            const nuevoProducto = {
+                nombre,
+                categoria,
+                subcategoria: document.getElementById('np_subcategoria').value.trim() || null,
+                marca: document.getElementById('np_marca').value.trim() || null,
+                precio,
+                precio_oferta: parseFloat(document.getElementById('np_precio_oferta').value) || null,
+                precio_anterior: parseFloat(document.getElementById('np_precio_anterior').value) || null,
+                en_oferta: document.getElementById('np_en_oferta').checked,
+                stock,
+                imagen_url: document.getElementById('np_imagen_url').value.trim() || null,
+                galeria: document.getElementById('np_galeria').value.trim() || null,
+                descripcion: document.getElementById('np_descripcion').value.trim() || null
+            };
+
+            try {
+                const headers = await headersAutenticados();
+                const res = await fetch(BACKEND_URL, {
+                    method: 'POST',
+                    headers,
+                    body: JSON.stringify(nuevoProducto)
+                });
+                if (!res.ok) throw new Error((await res.json()).error);
+
+                const creado = await res.json();
+                listaProductosAdmin.push(creado);
+                renderizarListaAdmin();
+                mostrarToast('Producto agregado con éxito');
+
+                // Limpiar formulario
+                ['np_nombre','np_categoria','np_subcategoria','np_marca','np_precio','np_precio_oferta','np_precio_anterior','np_imagen_url','np_galeria','np_descripcion'].forEach(id => document.getElementById(id).value = '');
+                document.getElementById('np_stock').value = 1;
+                document.getElementById('np_en_oferta').checked = false;
+                document.getElementById('newProductForm').classList.remove('show');
+            } catch (err) {
+                mostrarToast('Error: ' + err.message);
+            }
+        }
+
+        // ================= TOAST =================
+        let toastTimeout;
+        function mostrarToast(msg) {
+            const toast = document.getElementById('toastMsg');
+            toast.textContent = msg;
+            toast.classList.add('show');
+            clearTimeout(toastTimeout);
+            toastTimeout = setTimeout(() => toast.classList.remove('show'), 3000);
+        }
+
+        // Permitir "Enter" para iniciar sesión
+        document.getElementById('loginPassword').addEventListener('keydown', e => {
+            if (e.key === 'Enter') iniciarSesion();
+        });
+
+        verificarSesionInicial();
+    </script>
+</body>
+</html>
