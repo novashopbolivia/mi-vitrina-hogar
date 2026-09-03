@@ -426,10 +426,26 @@
         .card-img-wrap img { width: 100%; height: 100%; object-fit: cover; transition: transform 0.4s ease; }
         .product-card:hover .card-img-wrap img { transform: scale(1.06); }
 
+        /* PRODUCTO AGOTADO */
+        .product-card.agotado .card-img-wrap img { opacity: 0.45; filter: grayscale(60%); }
+        .product-card.agotado:hover { transform: none; box-shadow: none; }
+        .product-card.agotado .card-title { opacity: 0.6; }
+
         .badge-offer-tag {
             position: absolute;
             top: 12px; left: 12px;
             background: #e03813;
+            color: white;
+            padding: 4px 10px;
+            border-radius: 4px;
+            font-size: 0.75rem;
+            font-weight: 800;
+            letter-spacing: 0.3px;
+        }
+        .badge-agotado-tag {
+            position: absolute;
+            top: 12px; left: 12px;
+            background: #4b5563;
             color: white;
             padding: 4px 10px;
             border-radius: 4px;
@@ -477,6 +493,12 @@
             transition: all 0.2s;
         }
         .btn-card-cart-full:hover { background: #c52d0a; transform: translateY(-1px); }
+        .btn-card-cart-full:disabled {
+            background: #9ca3af;
+            cursor: not-allowed;
+            transform: none;
+        }
+        .btn-card-cart-full:disabled:hover { background: #9ca3af; transform: none; }
 
         /* ================= MODAL VISTA RÁPIDA AVANZADA CON GALERÍA Y DESCRIPCIÓN ================= */
         .modal-overlay {
@@ -1263,6 +1285,17 @@
             return { esOferta, precioFinal, precioTachado };
         }
 
+        // 🆕 Calcula cuántas unidades hay disponibles de un producto.
+        // Si el producto no tiene el campo "stock" cargado, se asume que hay stock ilimitado
+        // (para no romper productos viejos que todavía no tengan ese dato).
+        function obtenerStockProducto(prod) {
+            if (prod.stock === undefined || prod.stock === null || prod.stock === '') {
+                return Infinity;
+            }
+            const valor = parseInt(prod.stock, 10);
+            return isNaN(valor) ? Infinity : valor;
+        }
+
         // 1. INICIALIZAR
         async function inicializar() {
             try {
@@ -1608,7 +1641,18 @@
             grid.innerHTML = productos.map(prod => {
                 const foto = prod.imagen_url || 'https://images.unsplash.com/photo-1583847268964-b28dc8f51f92?w=500';
                 const { esOferta, precioFinal, precioTachado } = calcularPreciosProducto(prod);
-                const tagTexto = esOferta ? 'Mejor oferta' : (prod.subcategoria || prod.categoria || 'Novedad');
+
+                // 🆕 Verificamos si el producto está agotado
+                const stockDisponible = obtenerStockProducto(prod);
+                const sinStock = stockDisponible <= 0;
+
+                let tagHtml = '';
+                if (sinStock) {
+                    tagHtml = `<span class="badge-agotado-tag">Agotado</span>`;
+                } else {
+                    const tagTexto = esOferta ? 'Mejor oferta' : (prod.subcategoria || prod.categoria || 'Novedad');
+                    tagHtml = `<span class="badge-offer-tag">${tagTexto}</span>`;
+                }
 
                 let priceHtml = '';
                 if (precioTachado && precioTachado > precioFinal) {
@@ -1620,11 +1664,20 @@
                     priceHtml = `<span class="price-normal">${precioFinal} Bs.</span>`;
                 }
 
+                // 🆕 Botón distinto si está agotado
+                const botonHtml = sinStock
+                    ? `<button class="btn-card-cart-full" disabled>
+                           <i class="fa-solid fa-ban"></i> Agotado
+                       </button>`
+                    : `<button class="btn-card-cart-full" onclick="agregarAlCarrito(${prod.id})">
+                           <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
+                       </button>`;
+
                 return `
-                    <div class="product-card">
+                    <div class="product-card ${sinStock ? 'agotado' : ''}">
                         <div class="card-img-wrap" onclick="abrirModal(${prod.id})">
                             <img src="${foto}" alt="${prod.nombre}" loading="lazy">
-                            <span class="badge-offer-tag">${tagTexto}</span>
+                            ${tagHtml}
                             ${prod.marca ? `<span class="badge-brand-card">${prod.marca}</span>` : ''}
                         </div>
                         <div class="card-info">
@@ -1636,9 +1689,7 @@
                             </div>
 
                             <div>
-                                <button class="btn-card-cart-full" onclick="agregarAlCarrito(${prod.id})">
-                                    <i class="fa-solid fa-cart-plus"></i> Añadir al carrito
-                                </button>
+                                ${botonHtml}
                             </div>
                         </div>
                     </div>
@@ -1694,7 +1745,12 @@
             // Textos y badges
             document.getElementById('modalTitle').textContent = prod.nombre;
             document.getElementById('modalBrandBadge').textContent = prod.marca ? `Marca: ${prod.marca}` : 'Original';
-            document.getElementById('modalCatBadge').textContent = esOferta ? 'Mejor oferta' : (prod.categoria || 'Tienda');
+
+            // 🆕 Si está agotado, el badge de categoría avisa "Agotado"
+            const stockDisponible = obtenerStockProducto(prod);
+            const sinStock = stockDisponible <= 0;
+            document.getElementById('modalCatBadge').textContent = sinStock ? 'Agotado' : (esOferta ? 'Mejor oferta' : (prod.categoria || 'Tienda'));
+
             document.getElementById('modalSubcat').textContent = prod.subcategoria ? `Sección: ${prod.subcategoria}` : '';
 
             // Descripción
@@ -1718,10 +1774,20 @@
                 priceContainer.innerHTML = `<span style="font-size: 2rem; font-weight: 800; color: var(--primary);">${precioFinal} Bs.</span>`;
             }
 
-            document.getElementById('modalBtnAddToCart').onclick = () => {
-                agregarAlCarrito(prod.id);
-                cerrarModal();
-            };
+            // 🆕 Botón "Añadir al carrito" del modal: deshabilitado si está agotado
+            const btnModal = document.getElementById('modalBtnAddToCart');
+            if (sinStock) {
+                btnModal.disabled = true;
+                btnModal.innerHTML = `<i class="fa-solid fa-ban"></i> Agotado`;
+                btnModal.onclick = null;
+            } else {
+                btnModal.disabled = false;
+                btnModal.innerHTML = `<i class="fa-solid fa-cart-plus"></i> Añadir al carrito`;
+                btnModal.onclick = () => {
+                    agregarAlCarrito(prod.id);
+                    cerrarModal();
+                };
+            }
 
             document.getElementById('quickViewModal').classList.add('open');
         }
@@ -1911,9 +1977,24 @@
             const prod = listaProductos.find(p => p.id === id);
             if (!prod) return;
 
+            // 🆕 No dejar agregar si está agotado
+            const stockDisponible = obtenerStockProducto(prod);
+            if (stockDisponible <= 0) {
+                alert('Lo sentimos, este producto está agotado.');
+                return;
+            }
+
             const { precioFinal } = calcularPreciosProducto(prod);
 
             const item = carrito.find(i => i.id === id);
+            const cantidadEnCarrito = item ? item.cantidad : 0;
+
+            // 🆕 No dejar agregar más unidades de las que hay en stock
+            if (cantidadEnCarrito + 1 > stockDisponible) {
+                alert(`Solo quedan ${stockDisponible} unidad(es) disponibles de "${prod.nombre}".`);
+                return;
+            }
+
             if (item) {
                 item.cantidad += 1;
             } else {
@@ -1937,6 +2018,16 @@
         function modificarCantidad(id, delta) {
             const item = carrito.find(i => i.id === id);
             if (!item) return;
+
+            // 🆕 Si está sumando unidades, verificar que no supere el stock disponible
+            if (delta > 0) {
+                const prod = listaProductos.find(p => p.id === id);
+                const stockDisponible = prod ? obtenerStockProducto(prod) : Infinity;
+                if (item.cantidad + delta > stockDisponible) {
+                    alert(`Solo quedan ${stockDisponible} unidad(es) disponibles de este producto.`);
+                    return;
+                }
+            }
 
             item.cantidad += delta;
             if (item.cantidad <= 0) {
